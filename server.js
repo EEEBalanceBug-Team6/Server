@@ -89,10 +89,10 @@ app.get('/client/datadump', function(req, res){
 
 // need methods (POST) to store new vertice and location data
 
-app.post('/data/node', function(req, res){
+app.post('/data/vertice', function(req, res){
     // use post method to add a node - exits can be determined on the basis of the shape of the turn
     // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-    
+
 })
 
 app.get('/data/clear', function(req, res){
