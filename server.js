@@ -64,7 +64,7 @@ app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Welcome to Group 6\'s server!');
     // incomplete, render UI when reaching this point.
-})
+});
 
 app.get('/client', function(req, res){
     var response = {
@@ -76,7 +76,7 @@ app.get('/client', function(req, res){
     res.end(stringResponse); 
     console.log(stringResponse);
     // WORKS
-})
+});
 
 app.get('/client/datadump', function(req, res){
     // complete this function with the newdata object being sent as a response
@@ -88,7 +88,7 @@ app.get('/client/datadump', function(req, res){
         "edges" : []
     };
     // WORKS, need to test after adding a few values
-})
+});
 
 // need methods (POST) to store new vertice and location data
 
@@ -96,15 +96,15 @@ app.post('/data/vertice', function(req, res){
     // use post method to add a node - exits can be determined on the basis of the shape of the turn
     // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
 
-})
+});
 
 app.get('/data/clear', function(req, res){
     // use get method to clear the two data structures
-})
+});
 
 app.post('/data/update', function(req, res){
     // use post method to update position in real time - should be updated based on req
-})
+});
 
 app.listen(PORT, IP, function(err){
     if (err) { console.log(err); }
