@@ -3,7 +3,6 @@
 # Important links
 
 - **GitHub:** https://github.com/hakanmerdan/EEEBalanceBug.git
-- **Organization:** [https://github.com/orgs/EEEBalanceBug-Team6/dashboard](https://github.com/EEEBalanceBug-Team6)
 - **ESP32 + Node Server:** [https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322](https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322)
 - **Redis Database:** [https://redis.io/docs/clients/nodejs/](https://redis.io/docs/clients/nodejs/)
 - **ExpressJs Website:** [https://expressjs.com/](https://expressjs.com/)
