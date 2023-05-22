@@ -1,6 +1,6 @@
 # Node Server
 
-# Important links
+## Important links
 
 - **GitHub:** https://github.com/hakanmerdan/EEEBalanceBug.git
 - **ESP32 + Node Server:** [https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322](https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322)
@@ -9,7 +9,7 @@
 - **sendFile function:** [https://www.geeksforgeeks.org/express-js-res-sendfile-function/](https://www.geeksforgeeks.org/express-js-res-sendfile-function/)
 - **Filesystem nodejs:** [https://www.w3schools.com/nodejs/nodejs_filesystem.asp](https://www.w3schools.com/nodejs/nodejs_filesystem.asp)
 
-# Tasks
+## Tasks
 
 - [x]  Understand basic express routing.
 - [ ]  Add responses to the basic API calls as shown in the API contract at https://github.com/EEEBalanceBug-Team6/docs.
@@ -23,7 +23,7 @@
 - [ ]  Send output of data structure to database, also send it to frontend to render the map.
 - [ ]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
 
-# Notes on Tasks
+## Notes on Tasks
 
 - Note that you can’t use writeHead and send together, if you want to send a particular header then you need to send 200 only.
 - The tricky bit for the addEdge() function will be to figure out what the edge actually is and in what order it would need to be added. This can probably be done based on the id key in the object? Try drawing a few cases out to check.
