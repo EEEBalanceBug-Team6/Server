@@ -52,35 +52,40 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
 }
 
 function checkVisited(x, y){
-    // this function needs to check the visited vertices
+    // this function needs to check the visited vertices and then assign a connection to the previosuly visited node with a vertex
 }
 
 app.get('/', function(req, res){
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('hello world'); // incomplete, needs to send back a json with the requirements according to the API contract
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Welcome to Group 6\'s server!');
+    // incomplete, render UI when reaching this point.
 })
 
 app.get('/client', function(req, res){
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('enter the server connectivity status here'); // incomplete, needs to serve a webpage instead
+    var response = {
+        'status' : 'success',
+        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
+    }
+    stringResponse = JSON.stringify(response)
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(stringResponse); 
+    console.log(stringResponse);
+    // WORKS
 })
 
 app.get('/client/datadump', function(req, res){
     // complete this function with the newdata object being sent as a response
     res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end(newdata);
+    res.end(JSON.stringify(newdata));
     newdata = {
         "locations" : [], 
         "vertices" : [], 
         "edges" : []
-    }; // this just resets the newdata object for fresh insertion, alldata is untouched
+    };
+    // WORKS, need to test after adding a few values
 })
 
 // need methods (POST) to store new vertice and location data
-
-app.post('/data/update', function(req, res){
-    // use post method to update position in real time - should be updated based on req
-})
 
 app.post('/data/node', function(req, res){
     // use post method to add a node - exits can be determined on the basis of the shape of the turn
@@ -88,6 +93,10 @@ app.post('/data/node', function(req, res){
 
 app.get('/data/clear', function(req, res){
     // use get method to clear the two data structures
+})
+
+app.post('/data/update', function(req, res){
+    // use post method to update position in real time - should be updated based on req
 })
 
 app.listen(PORT, IP, function(err){
