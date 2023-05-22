@@ -5,6 +5,8 @@ let PORT = 8080
 
 const app = express();
 
+var previousNode = 0; // this variable needs to be used to 
+
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
     "vertices" : [], 
@@ -35,7 +37,7 @@ function addVertice(id, x, y, options){
         'id' : id, // number
         'x' : x, // number
         'y' : y, // number
-        'options' : options // has to be a list of all possible exits
+        'options' : options // has to be a list of all possible exits, so L, R, F, B - note that back is from the magnetic north or south determined by the compass module
     }
     alldata.vertices.push(json);
     newdata.vertices.push(json);
@@ -89,6 +91,8 @@ app.get('/client/datadump', function(req, res){
 
 app.post('/data/node', function(req, res){
     // use post method to add a node - exits can be determined on the basis of the shape of the turn
+    // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
+    
 })
 
 app.get('/data/clear', function(req, res){
