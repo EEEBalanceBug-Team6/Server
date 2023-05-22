@@ -1,9 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 let IP = 'localhost' // remember to change this when using it for production
 let PORT = 8080
 
 const app = express();
+
+app.use(bodyParser.json());
 
 var previousNode = 0; // this variable needs to be used to 
 
