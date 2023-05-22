@@ -3,12 +3,12 @@
 ## Important links
 
 - **GitHub:** https://github.com/hakanmerdan/EEEBalanceBug.git
-- **ESP32 + Node Server:** [https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322](https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322)
-- **Redis Database:** [https://redis.io/docs/clients/nodejs/](https://redis.io/docs/clients/nodejs/)
-- **ExpressJs Website:** [https://expressjs.com/](https://expressjs.com/)
-- **sendFile function:** [https://www.geeksforgeeks.org/express-js-res-sendfile-function/](https://www.geeksforgeeks.org/express-js-res-sendfile-function/)
-- **Filesystem nodejs:** [https://www.w3schools.com/nodejs/nodejs_filesystem.asp](https://www.w3schools.com/nodejs/nodejs_filesystem.asp)
-- **Routing:** [https://expressjs.com/en/guide/routing.html#route-parameters]
+- **ESP32 + Node Server:** https://community.appinventor.mit.edu/t/node-js-web-server-in-pc-esp32-esp8266-sensor-temp-humd-batch-file-windows/38322
+- **Redis Database:** https://redis.io/docs/clients/nodejs/
+- **ExpressJs Website:** https://expressjs.com/
+- **sendFile function:** https://www.geeksforgeeks.org/express-js-res-sendfile-function/
+- **Filesystem nodejs:** https://www.w3schools.com/nodejs/nodejs_filesystem.asp
+- **Routing:** https://expressjs.com/en/guide/routing.html#route-parameters
 
 ## Tasks
 
