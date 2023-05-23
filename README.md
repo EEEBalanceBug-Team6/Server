@@ -29,5 +29,7 @@
 - Note that you can’t use writeHead and send together, if you want to send a particular header then you need to send 200 only.
 - The tricky bit for the addEdge() function will be to figure out what the edge actually is and in what order it would need to be added. This can probably be done based on the id key in the object? Try drawing a few cases out to check.
 - To solve this I have added previousNode which is basically the last node we had traversed to. An edge can be created from the previous node to the next node, weights are sent as part of the query. Note that previousNode will need to be reassigned everytime the node method is called.
+- While adding the edge, we need a list of two nodes. If the node we are visiting has already been visited before then we need to assign the node we are re-visiting as the "child" and grab it's ID from the list of vertices we have already visited.
+- Remember that the start node should not have a path to itself. The rover should ony create a node AFTER the start node. Maybe have the 0th value set in the data structure?
 - Create a python file and populate a variable with a list of lists of edges. Use Dijkstra's algorithm to create and solve the shortest path tree in the python file and then pipe these values back to the javascript file.
 - Use req.body to parse the json in the POST methods.
