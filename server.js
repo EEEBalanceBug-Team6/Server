@@ -121,6 +121,8 @@ app.get('/data/clear', function(req, res){
     // use get method to clear the two data structures
 });
 
+//If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
+
 app.listen(PORT, IP, function(err){
     if (err) { console.log(err); }
     else { console.log("Server listening on PORT", PORT); }
