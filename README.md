@@ -17,6 +17,7 @@
 - [ ]  Extend API contract with the methods needed for ESP32 communication
 - [x]  In the client datadump method, you need to reset the newdata object to a blank version of it because of the updation requirements
 - [ ]  Add a POST request that also adds data to the “data” json.
+- [ ]  Test the checkOptions function.
 - [ ]  Create placeholder functions that interact with ESP32 for movement (Based on feedback from the server).
 - [ ]  Understand subprocess creation for interacting with Python files for Dijkstra's Algorithm. (Use fs library of js?)
 - [x]  Put requests into data structure (Graph? Tree equivalent?).
