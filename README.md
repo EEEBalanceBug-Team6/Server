@@ -22,6 +22,7 @@
 - [x]  Put requests into data structure (Graph? Tree equivalent?).
 - [ ]  Send output of data structure to database, also send it to frontend to render the map.
 - [ ]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
+- [ ]  Add code for backtracking of the rover in case it encounters a node it has seen before.
 
 ## Notes on Tasks
 
@@ -33,3 +34,4 @@
 - Very unsure of the implementation of /data/update in the API. Confirm this with Professor Sarim.
 - Create a python file and populate a variable with a list of lists of edges. Use Dijkstra's algorithm to create and solve the shortest path tree in the python file and then pipe these values back to the javascript file.
 - Use req.body to parse the json in the POST methods.
+- A note on the implementation of the code for the rover: If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
