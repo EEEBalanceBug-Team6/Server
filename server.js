@@ -8,7 +8,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-var previousNode = 0; // this variable needs to be used to 
+var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 var start = true;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
@@ -84,14 +84,16 @@ app.get('/client/datadump', function(req, res){
         "edges" : []
     };
     // WORKS, need to test after adding a few values
-});
+}); 
 
-// need methods (POST) to store new vertice and location data
+app.post('/data/initialize', function(req, res){
+    //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
+});
 
 app.post('/data/update', function(req, res){ 
     var store = true;
     var body = req.body; 
-    alldata.vertices.forEach(object => {
+    alldata.vertices.forEach(object => { // checks if you have already visited a given node before. If you have then it implements logic for a wrap around in terms of the edge, but no addition to the vertices
         if (object.x === body.x && object.y === body.y){
             store = false;
             addEdge([previousNode, object.id], body.weight);
@@ -99,18 +101,13 @@ app.post('/data/update', function(req, res){
         }
     });
     if (store){
-        addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
+        addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-        if(!start){
-            addEdge([previousNode, previousNode + 1], body.weight);
-        }else{
-            start = false;
-        }
+        addEdge([previousNode, previousNode + 1], body.weight);
         
         previousNode += 1;
     }
-    console.log(previousNode);
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
 });
