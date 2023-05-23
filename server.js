@@ -77,7 +77,11 @@ app.get('/client', function(req, res){
 app.get('/client/datadump', function(req, res){
     // complete this function with the newdata object being sent as a response
     res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end(JSON.stringify(newdata));
+    var data = {
+        "status" : "success",
+        "data" : newdata
+    };
+    res.end(JSON.stringify(data));
     newdata = {
         "locations" : [], 
         "vertices" : [], 
