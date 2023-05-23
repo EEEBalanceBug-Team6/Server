@@ -99,6 +99,8 @@ app.post('/data/initialize', function(req, res){
     res.end('success');
 });
 
+// these two post methods are a little incommplete because you can't see if a path has been explored before or not.
+
 app.post('/data/update', function(req, res){ 
     var store = true;
     var body = req.body; 
@@ -122,7 +124,16 @@ app.post('/data/update', function(req, res){
 });
 
 app.get('/data/clear', function(req, res){
-    // use get method to clear the two data structures
+    alldata = {
+        "locations" : [], 
+        "vertices" : [], 
+        "edges" : []
+    };
+
+    newdata = alldata;
+
+    res.writeHead(200, {'Content-Type' : 'text/plain'});
+    res.end('success');
 });
 
 //If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
