@@ -59,6 +59,24 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     newdata.edges.push(json);
 } 
 
+function checkOption(direction, ID){
+    alldata.vertices.forEach(vertice => { // this part checks the parent node and sets the direction from which you've traversed (part of the request) as true
+        if(vertice.id === ID){
+            // means you have found the node in the list of nodes already traversed
+            var keys = vertice.options.keys();
+
+            keys.forEach(key => {
+                if(key === direction){
+                    vertice.options.key = true;
+                }
+            });
+
+        }
+    });
+}
+
+// add a function here that finds the shortest path between any two given vertices.
+
 app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Welcome to Group 6\'s server!');
@@ -98,6 +116,8 @@ app.post('/data/initialize', function(req, res){
     var body = req.body; 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
+    checkOptions(body.startDirection, previousNode);
+
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
 });
@@ -107,17 +127,12 @@ app.post('/data/initialize', function(req, res){
 app.post('/data/update', function(req, res){ 
     var store = true;
     var body = req.body; 
-    alldata.vertices.forEach(object => { // this part checks the parent node and sets the direction from which you've traversed (part of the request) as true
-        if(object.id === previousNode){
-            // means you have found the node in the list of nodes already traversed
-            
-        }
-    });
-    alldata.vertices.forEach(object => { // checks if you have already visited a given node before. If you have then it implements logic for a wrap around in terms of the edge, but no addition to the vertices
-        if (object.x === body.x && object.y === body.y){
+    checkOption(body.parentDirection, previousNode);
+    alldata.vertices.forEach(vertice => { // checks if you have already visited a given node before. If you have then it implements logic for a wrap around in terms of the edge, but no addition to the vertices
+        if (vertice.x === body.x && vertice.y === body.y){
             store = false;
-            addEdge([previousNode, object.id], body.weight);
-            previousNode = object.id; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
+            addEdge([previousNode, vertice.id], body.weight);
+            previousNode = vertice.id; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
         }
     });
     if (store){
@@ -128,8 +143,10 @@ app.post('/data/update', function(req, res){
         
         previousNode += 1;
     }
+    checkOption(body.childDirection, previousNode);
+
     res.writeHead(200, {'Content-Type' : 'text/plain'});
-    res.end('success');
+    res.end('success'); // can modify the response to check for the next possible option to be taken
 });
 
 app.get('/data/clear', function(req, res){
