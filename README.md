@@ -14,13 +14,13 @@
 
 - [x]  Understand basic express routing.
 - [x]  Add responses to the basic API calls as shown in the API contract at https://github.com/EEEBalanceBug-Team6/docs.
-- [ ]  Extend API contract with the methods needed for ESP32 communication
-- [x]  In the client datadump method, you need to reset the newdata object to a blank version of it because of the updation requirements
-- [ ]  Add a POST request that also adds data to the “data” json.
+- [x]  In the client datadump method, you need to reset the newdata object to a blank version of it because of the updation requirements.
+- [x]  Put requests into data structure (Graph? Tree equivalent?).
+- [x]  Add a POST request that also adds data to the “data” json.
+- [x]  Extend API contract with the methods needed for ESP32 communication
 - [ ]  Test the checkOptions function.
 - [ ]  Create placeholder functions that interact with ESP32 for movement (Based on feedback from the server).
 - [ ]  Understand subprocess creation for interacting with Python files for Dijkstra's Algorithm. (Use fs library of js?)
-- [x]  Put requests into data structure (Graph? Tree equivalent?).
 - [ ]  Send output of data structure to database, also send it to frontend to render the map.
 - [ ]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
 - [ ]  Add code for backtracking of the rover in case it encounters a node it has seen before.
