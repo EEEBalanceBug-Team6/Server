@@ -54,7 +54,7 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     }
     alldata.edges.push(json);
     newdata.edges.push(json);
-}
+} // this was the old code for the edge
 
 function checkVisited(x, y){
     // this function needs to check the visited vertices and then assign a connection to the previosuly visited node with a vertex
