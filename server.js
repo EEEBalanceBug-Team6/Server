@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 
 var previousNode = 0; // this variable needs to be used to 
+var start = true;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -87,20 +88,26 @@ app.get('/client/datadump', function(req, res){
 
 // need methods (POST) to store new vertice and location data
 
-app.post('/data/vertice', function(req, res){ 
+app.post('/data/update', function(req, res){ 
     var store = true;
-    var parent = -1; // the logic for this is that if the node has already been visited and is a part of the data structure
     var body = req.body; 
     alldata.vertices.forEach(object => {
         if (object.x === body.x && object.y === body.y){
             store = false;
-            parent = object.
+            addEdge([previousNode, object.id], body.weight);
+            previousNode = object.id; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
         }
     });
     if (store){
-        addVertice(parseInt(previousNode), parseInt(body.x), parseInt(body.y), body.options);
+        addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
+        if(!start){
+            addEdge([previousNode, previousNode + 1], body.weight);
+        }else{
+            start = false;
+        }
+        
         previousNode += 1;
     }
     console.log(previousNode);
@@ -110,10 +117,6 @@ app.post('/data/vertice', function(req, res){
 
 app.get('/data/clear', function(req, res){
     // use get method to clear the two data structures
-});
-
-app.post('/data/update', function(req, res){
-    // use post method to update position in real time - should be updated based on req
 });
 
 app.listen(PORT, IP, function(err){
