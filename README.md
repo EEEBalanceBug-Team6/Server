@@ -18,7 +18,7 @@
 - [x]  In the client datadump method, you need to reset the newdata object to a blank version of it because of the updation requirements
 - [ ]  Add a POST request that also adds data to the “data” json.
 - [ ]  Create placeholder functions that interact with ESP32 for movement (Based on feedback from the server).
-- [ ]  Understand subprocess creation for interacting with Python files for Dijkstra's Algorithm.
+- [ ]  Understand subprocess creation for interacting with Python files for Dijkstra's Algorithm. (Use fs library of js?)
 - [x]  Put requests into data structure (Graph? Tree equivalent?).
 - [ ]  Send output of data structure to database, also send it to frontend to render the map.
 - [ ]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
