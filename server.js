@@ -26,7 +26,7 @@ var newdata = { // data structure to be sent, empty everytime a client dump is m
 
 function addLocation(timestamp, x, y, direction) { 
     var json = {
-        'timestamp' : timestamp, // has to be a date object
+        'timestamp' : timestamp, // has to be a date object - can use the method used in the base file
         'x' : x, // has to be a number
         'y' : y, // has to be a number
         'direction' : direction // string
@@ -40,7 +40,7 @@ function addVertice(id, x, y, options){
         'id' : id, // number
         'x' : x, // number
         'y' : y, // number
-        'options' : options // has to be a list of all possible exits, so L, R, F, B - note that back is from the magnetic north or south determined by the compass module
+        'options' : options // has to be a list of all possible exits, so N, S, E, W - determined by the compass module
     }
     alldata.vertices.push(json);
     newdata.vertices.push(json);
@@ -54,16 +54,11 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     }
     alldata.edges.push(json);
     newdata.edges.push(json);
-} // this was the old code for the edge
-
-function checkVisited(x, y){
-    // this function needs to check the visited vertices and then assign a connection to the previosuly visited node with a vertex
-}
+} 
 
 app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Welcome to Group 6\'s server!');
-    // incomplete, render UI when reaching this point.
 });
 
 app.get('/client', function(req, res){
@@ -92,21 +87,22 @@ app.get('/client/datadump', function(req, res){
 
 // need methods (POST) to store new vertice and location data
 
-app.post('/data/vertice', function(req, res){ // remember to change this to POST
-    // use post method to add a node - exits can be determined on the basis of the shape of the turn
-    // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
+app.post('/data/vertice', function(req, res){ 
     var store = true;
+    var parent = -1; // the logic for this is that if the node has already been visited and is a part of the data structure
     var body = req.body; 
-    // need to add logic for converting this to an edge between two nodes.
     alldata.vertices.forEach(object => {
         if (object.x === body.x && object.y === body.y){
             store = false;
+            parent = object.
         }
     });
     if (store){
-        addVertice(previousNode, body.x, body.y, body.options);
+        addVertice(parseInt(previousNode), parseInt(body.x), parseInt(body.y), body.options);
+        // need to add logic for converting this to an edge between two nodes.
+        // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
+        previousNode += 1;
     }
-    previousNode += 1;
     console.log(previousNode);
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
