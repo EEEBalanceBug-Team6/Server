@@ -14,13 +14,15 @@ var start = true;
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
     "vertices" : [], 
-    "edges" : [] // this can actually be used alone to create the graph for Dijkstra's algorithm
+    "edges" : [], // this can actually be used alone to create the graph for Dijkstra's algorithm
+    "shortest" : [] // need to write a function that uses dijkstra's to find the shortest path
 };
 
 var newdata = { // data structure to be sent, empty everytime a client dump is made
     "locations" : [], 
     "vertices" : [], 
-    "edges" : []
+    "edges" : [],
+    "shortest" : [] // need to write a function that uses dijkstra's to find the shortest path
 };
 
 // the three functions below are helper functions for pushing data to both data structures, datadump method needs to reset the newdata to empty object
@@ -41,7 +43,7 @@ function addVertice(id, x, y, options){
         'id' : id, // number
         'x' : x, // number
         'y' : y, // number
-        'options' : options // has to be a list of all possible exits, so N, S, E, W - determined by the compass module
+        'options' : options // has to be an object of all possible exits, so N, S, E, W - determined by the compass module, along with a boolean indicating whether you have traversed the edge or not
     }
     alldata.vertices.push(json);
     newdata.vertices.push(json);
@@ -85,7 +87,8 @@ app.get('/client/datadump', function(req, res){
     newdata = {
         "locations" : [], 
         "vertices" : [], 
-        "edges" : []
+        "edges" : [],
+        "shortest" : []
     };
     // WORKS, need to test after adding a few values
 }); 
@@ -104,6 +107,12 @@ app.post('/data/initialize', function(req, res){
 app.post('/data/update', function(req, res){ 
     var store = true;
     var body = req.body; 
+    alldata.vertices.forEach(object => { // this part checks the parent node and sets the direction from which you've traversed (part of the request) as true
+        if(object.id === previousNode){
+            // means you have found the node in the list of nodes already traversed
+            
+        }
+    });
     alldata.vertices.forEach(object => { // checks if you have already visited a given node before. If you have then it implements logic for a wrap around in terms of the edge, but no addition to the vertices
         if (object.x === body.x && object.y === body.y){
             store = false;
@@ -127,7 +136,8 @@ app.get('/data/clear', function(req, res){
     alldata = {
         "locations" : [], 
         "vertices" : [], 
-        "edges" : []
+        "edges" : [],
+        "shortest" : []
     };
 
     newdata = alldata;
