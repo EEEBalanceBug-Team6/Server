@@ -88,6 +88,11 @@ app.get('/client/datadump', function(req, res){
 
 app.post('/data/initialize', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
+    var body = req.body; 
+    addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
+
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('success');
 });
 
 app.post('/data/update', function(req, res){ 
