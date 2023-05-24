@@ -18,6 +18,7 @@
 - [x]  Put requests into data structure (Graph? Tree equivalent?).
 - [x]  Add a POST request that also adds data to the “data” json.
 - [x]  Extend API contract with the methods needed for ESP32 communication
+- [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [ ]  Test the checkOptions function.
 - [ ]  Create placeholder functions that interact with ESP32 for movement (Based on feedback from the server).
 - [ ]  Understand subprocess creation for interacting with Python files for Dijkstra's Algorithm. (Use fs library of js?)
@@ -32,7 +33,9 @@
 - To solve this I have added previousNode which is basically the last node we had traversed to. An edge can be created from the previous node to the next node, weights are sent as part of the query. Note that previousNode will need to be reassigned everytime the node method is called.
 - While adding the edge, we need a list of two nodes. If the node we are visiting has already been visited before then we need to assign the node we are re-visiting as the "child" and grab it's ID from the list of vertices we have already visited.
 - Remember that the start node should not have a path to itself. The rover should ony create a node AFTER the start node. Maybe have the 0th value set in the data structure?
-- Very unsure of the implementation of /data/update in the API. Confirm this with Professor Sarim.
 - Create a python file and populate a variable with a list of lists of edges. Use Dijkstra's algorithm to create and solve the shortest path tree in the python file and then pipe these values back to the javascript file.
 - Use req.body to parse the json in the POST methods.
 - A note on the implementation of the code for the rover: If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
+- Another thing to note as Sam said: Weights are not needed to be sent as part of the request and can be deduced from the 
+previous node (offset of the x or y coordinate). The decision to take a turn should be sent as part of the response to turn 
+maybe? Depends on the last option not yet considered.
