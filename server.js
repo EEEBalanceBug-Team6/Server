@@ -69,12 +69,13 @@ function checkOption(direction, ID){
 }
 
 function lookUpCoordinates(x, y){
+    var ID = -1;
     alldata.vertices.forEach(vertice => {
         if(vertice.x === x && vertice.y === y){
-            return vertice.id;
+            ID = vertice.id;
         }
     });
-    return false;
+    return ID;
 }
 
 // add a function here that finds the shortest path between any two given vertices.
@@ -118,7 +119,7 @@ app.post('/data/initialize', function(req, res){
     var body = req.body; 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
-    // checkOption(body.startDirection, previousNode); // assigns the direction to be traversed basically
+    checkOption(body.startDirection, previousNode); // assigns the direction to be traversed basically
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
@@ -131,7 +132,7 @@ app.post('/data/update', function(req, res){
 
     ID = lookUpCoordinates(body.x, body.y);
 
-    if (ID === false){
+    if (ID === -1){ 
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
@@ -150,6 +151,8 @@ app.post('/data/update', function(req, res){
 });
 
 app.get('/data/clear', function(req, res){
+    previousNode = 0;
+
     alldata = {
         "locations" : [], 
         "vertices" : [], 
