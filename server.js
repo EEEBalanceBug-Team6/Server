@@ -63,16 +63,18 @@ function checkOption(direction, ID){
     alldata.vertices.forEach(vertice => { // this part checks the parent node and sets the direction from which you've traversed (part of the request) as true
         if(vertice.id === ID){
             // means you have found the node in the list of nodes already traversed
-            var keys = vertice.options.keys();
-
-            keys.forEach(key => {
-                if(key === direction){
-                    vertice.options.key = true;
-                }
-            });
-
+            vertice.options[direction] = true;
         }
     });
+}
+
+function lookUpCoordinates(x, y){
+    alldata.vertices.forEach(vertice => {
+        if(vertice.x === x && vertice.y === y){
+            return vertice.id;
+        }
+    });
+    return false;
 }
 
 // add a function here that finds the shortest path between any two given vertices.
@@ -116,6 +118,8 @@ app.post('/data/initialize', function(req, res){
     var body = req.body; 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
+    // checkOption(body.startDirection, previousNode); // assigns the direction to be traversed basically
+
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
 });
@@ -123,34 +127,24 @@ app.post('/data/initialize', function(req, res){
 // these two post methods are a little incommplete because you can't see if a path has been explored before or not.
 
 app.post('/data/update', function(req, res){ 
-    var store = true;
     var body = req.body; 
-    alldata.vertices.forEach(vertice => { // checks if you have already visited a given node before. If you have then it implements logic for a wrap around in terms of the edge, but no addition to the vertices
-        if (vertice.x === body.x && vertice.y === body.y){
-            store = false;
-            addEdge([previousNode, vertice.id], body.weight);
-            previousNode = vertice.id; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
-        }
-    });
-    if (store){
+
+    ID = lookUpCoordinates(body.x, body.y);
+
+    if (ID === false){
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, previousNode + 1], body.weight);
         
         previousNode += 1;
+    } else {
+        addEdge([previousNode, ID], body.weight);
+        previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success'); // can modify the response to check for the next possible option to be taken
-});
-
-app.post('/data/turn', function(req, res){
-    // this uses checkOption to find what direction the turn has been made in
-
-    var body = req.body;
-
-    
 });
 
 app.get('/data/clear', function(req, res){
