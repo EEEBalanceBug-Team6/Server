@@ -63,7 +63,12 @@ function checkOption(direction, ID){
     alldata.vertices.forEach(vertice => { // this part checks the parent node and sets the direction from which you've traversed (part of the request) as true
         if(vertice.id === ID){
             // means you have found the node in the list of nodes already traversed
-            vertice.options[direction] = true;
+
+            keys = Object.keys(vertice.options);
+
+            if (keys.includes(direction)) {;
+                vertice.options[direction] = true;
+            }
         }
     });
 }
