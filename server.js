@@ -110,7 +110,7 @@ app.get('/client/datadump', function(req, res){
         "edges" : [],
         "shortest" : []
     };
-    // WORKS, need to test after adding a few values
+    // WORKS
 }); 
 
 app.post('/data/initialize', function(req, res){
@@ -142,6 +142,8 @@ app.post('/data/update', function(req, res){
         addEdge([previousNode, ID], body.weight);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
+
+    // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success'); // can modify the response to check for the next possible option to be taken
