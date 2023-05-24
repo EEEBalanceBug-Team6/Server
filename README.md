@@ -17,14 +17,15 @@
 - [x]  In the client datadump method, you need to reset the newdata object to a blank version of it because of the updation requirements.
 - [x]  Put requests into data structure (Graph? Tree equivalent?).
 - [x]  Add a POST request that also adds data to the “data” json.
-- [x]  Extend API contract with the methods needed for ESP32 communication
+- [x]  Extend API contract with the methods needed for ESP32 communication.
+- [x]  Test the checkOptions function.
+- [ ]  Add code for backtracking of the rover in case it encounters a node it has seen before.
+- [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
-- [ ]  Test the checkOptions function.
 - [ ]  Create placeholder functions that interact with ESP32 for movement (Based on feedback from the server).
 - [ ]  Understand subprocess creation for interacting with Python files for Dijkstra's Algorithm. (Use fs library of js?)
 - [ ]  Send output of data structure to database, also send it to frontend to render the map.
 - [ ]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
-- [ ]  Add code for backtracking of the rover in case it encounters a node it has seen before.
 
 ## Notes on Tasks
 
@@ -39,3 +40,4 @@
 - Another thing to note as Sam said: Weights are not needed to be sent as part of the request and can be deduced from the 
 previous node (offset of the x or y coordinate). The decision to take a turn should be sent as part of the response to turn 
 maybe? Depends on the last option not yet considered.
+- The response for update should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
