@@ -44,7 +44,7 @@ function addVertice(id, x, y, options){
         'x' : x, // number
         'y' : y, // number
         'options' : options // has to be an object of all possible exits, so N, S, E, W - determined by the compass module, along with a boolean indicating whether you have traversed the edge or not
-    }
+    };
     alldata.vertices.push(json);
     newdata.vertices.push(json);
     // probably need another helper function here to check if one of the vertices is already a part of alldata, if it is then you need to use the addEdge function to create an edge between the two vertices.
@@ -54,7 +54,7 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     var json = {
         'vertices' : vertices, // list of vertices connected to the edge - assume first element is the origin node
         'weight' : weight // cost of traversing the edge.
-    }
+    };
     alldata.edges.push(json);
     newdata.edges.push(json);
 } 
@@ -94,7 +94,7 @@ app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
         'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
-    }
+    };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(stringResponse); 
