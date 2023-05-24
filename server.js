@@ -116,8 +116,6 @@ app.post('/data/initialize', function(req, res){
     var body = req.body; 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
-    checkOptions(body.startDirection, previousNode);
-
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
 });
@@ -127,7 +125,6 @@ app.post('/data/initialize', function(req, res){
 app.post('/data/update', function(req, res){ 
     var store = true;
     var body = req.body; 
-    checkOption(body.parentDirection, previousNode);
     alldata.vertices.forEach(vertice => { // checks if you have already visited a given node before. If you have then it implements logic for a wrap around in terms of the edge, but no addition to the vertices
         if (vertice.x === body.x && vertice.y === body.y){
             store = false;
@@ -143,10 +140,17 @@ app.post('/data/update', function(req, res){
         
         previousNode += 1;
     }
-    checkOption(body.childDirection, previousNode);
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success'); // can modify the response to check for the next possible option to be taken
+});
+
+app.post('/data/turn', function(req, res){
+    // this uses checkOption to find what direction the turn has been made in
+
+    var body = req.body;
+
+    
 });
 
 app.get('/data/clear', function(req, res){
