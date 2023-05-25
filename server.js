@@ -167,7 +167,12 @@ app.get('/data/clear', function(req, res){
         "shortest" : []
     };
 
-    newdata = alldata;
+    newdata = {
+        "locations" : [], 
+        "vertices" : [], 
+        "edges" : [],
+        "shortest" : []
+    };
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
