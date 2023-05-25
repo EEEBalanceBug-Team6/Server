@@ -9,7 +9,6 @@ const app = express();
 app.use(bodyParser.json());
 
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
-var start = true;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
