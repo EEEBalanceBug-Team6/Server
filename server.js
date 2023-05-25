@@ -134,7 +134,7 @@ app.post('/data/initialize', function(req, res){
 
 // these two post methods are a little incommplete because you can't see if a path has been explored before or not.
 
-app.post('/data/update', function(req, res){ 
+app.post('/data/node', function(req, res){ 
     var body = req.body; 
 
     ID = lookUpCoordinates(body.x, body.y);
