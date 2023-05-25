@@ -118,7 +118,7 @@ app.get('/client/datadump', function(req, res){
     // WORKS
 }); 
 
-app.post('/data/initialize', function(req, res){
+app.post('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.body; 
 
@@ -138,6 +138,7 @@ app.post('/data/node', function(req, res){
     var body = req.body; 
 
     ID = lookUpCoordinates(body.x, body.y);
+    checkOption(body.parentDirection, previousNode);
 
     if (ID === -1){ 
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
@@ -150,6 +151,8 @@ app.post('/data/node', function(req, res){
         addEdge([previousNode, ID], body.weight);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
+
+    checkOption(body.childDirection, previousNode);
 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
