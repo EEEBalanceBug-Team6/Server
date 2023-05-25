@@ -122,12 +122,15 @@ app.get('/client/datadump', function(req, res){
 app.post('/data/initialize', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.body; 
+
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
     checkOption(body.startDirection, previousNode); // assigns the direction to be traversed basically
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
+
+    // WORKS, only issue is it doesn't check if the node has already been initialized
 });
 
 // these two post methods are a little incommplete because you can't see if a path has been explored before or not.
