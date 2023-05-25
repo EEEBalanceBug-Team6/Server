@@ -132,7 +132,11 @@ app.post('/data/start', function(req, res){
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
 
-// these two post methods are a little incommplete because you can't see if a path has been explored before or not.
+app.post('/data/update', function(req, res) {
+    // updates the x and y coordinates periodically - can be used to request a Dijksta's update as well, with the reponse being the 200 only if the list was added to the data structure
+});
+
+// these two post methods are a little incomplete because you can't see if a path has been explored before or not.
 
 app.post('/data/node', function(req, res){ 
     var body = req.body; 
@@ -179,6 +183,10 @@ app.get('/data/clear', function(req, res){
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
+});
+
+app.get('/data/turn', function(req, res) {
+    // get information about what turn to make, depends on options. Use the coordinates to query a turn made at a node.
 });
 
 //If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
