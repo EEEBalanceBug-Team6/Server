@@ -65,11 +65,21 @@ function checkOption(direction, ID){
 
             keys = Object.keys(vertice.options);
 
-            if (keys.includes(direction)) {;
+            if (keys.includes(direction)) {
                 vertice.options[direction] = true;
             }
         }
     });
+}
+
+function lookUpOption(ID){
+    returnval = -1; // can be used for an error message
+    alldata.vertices.forEach(vertice => {
+        if(vertice.id === ID){
+            returnval = vertice.options;
+        }
+    })
+    return returnval;
 }
 
 function lookUpCoordinates(x, y){
@@ -103,7 +113,7 @@ app.get('/client', function(req, res){
 
 app.get('/client/datadump', function(req, res){
     // complete this function with the newdata object being sent as a response
-    res.writeHead(200, { 'Content-Type': 'application/json'});
+    res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
         "data" : newdata
@@ -125,7 +135,7 @@ app.post('/data/start', function(req, res){
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('success');
+    res.end('success'); // pick any option available and put it into a variable that is sent along with the next request.
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
@@ -133,8 +143,6 @@ app.post('/data/start', function(req, res){
 app.post('/data/update', function(req, res) {
     // updates the x and y coordinates periodically - can be used to request a Dijksta's update as well, with the reponse being the 200 only if the list was added to the data structure
 });
-
-// these two post methods are a little incomplete because you can't see if a path has been explored before or not.
 
 app.post('/data/node', function(req, res){ 
     var body = req.body; 
@@ -158,8 +166,12 @@ app.post('/data/node', function(req, res){
 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
-    res.writeHead(200, {'Content-Type' : 'text/plain'});
-    res.end('success'); // can modify the response to check for the next possible option to be taken
+    console.log(lookUpOption(lookUpCoordinates(body.x, body.y)));
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(lookUpOption(lookUpCoordinates(body.x, body.y)))); // sends as a response a json containing the options explored, helps pick the next option to be taken.
+
+    // once receiving the response, remember to store the option you pick in a variable and send it as part of the next request.
 
     // WORKS, maybe add error messages when you try adding the same node twice?
 });
