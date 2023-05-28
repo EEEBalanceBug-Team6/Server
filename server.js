@@ -124,8 +124,6 @@ app.post('/data/start', function(req, res){
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
-    checkOption(body.startDirection, previousNode); // assigns the direction to be traversed basically
-
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
 
@@ -142,7 +140,7 @@ app.post('/data/node', function(req, res){
     var body = req.body; 
 
     ID = lookUpCoordinates(body.x, body.y);
-    checkOption(body.parentDirection, previousNode);
+    checkOption(body.parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
     if (ID === -1){ 
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
@@ -156,12 +154,14 @@ app.post('/data/node', function(req, res){
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
-    checkOption(body.childDirection, previousNode);
+    checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success'); // can modify the response to check for the next possible option to be taken
+
+    // WORKS, maybe add error messages when you try adding the same node twice?
 });
 
 app.get('/data/clear', function(req, res){
