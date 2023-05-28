@@ -197,10 +197,6 @@ app.get('/data/clear', function(req, res){
     res.end('success');
 });
 
-app.get('/data/turn', function(req, res) {
-    // get information about what turn to make, depends on options. Use the coordinates to query a turn made at a node.
-});
-
 //If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
 
 app.listen(PORT, IP, function(err){
