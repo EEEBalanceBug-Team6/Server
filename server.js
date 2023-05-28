@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-let IP = 'localhost' // remember to change this when using it for production
+let IP = '0.0.0.0' // remember to change this when using it for production - you have to use the public IPv4 address given by the ec2.
 let PORT = 8080
 
 const app = express();
