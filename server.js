@@ -211,5 +211,8 @@ app.get('/data/clear', function(req, res){
 
 app.listen(PORT, IP, function(err){
     if (err) { console.log(err); }
-    else { console.log("Server listening on PORT", PORT); }
+    else {
+        console.log("Server listening on PORT", PORT); 
+        console.log('Current Time: ' + londonTime + ' BST');
+    }
 });
