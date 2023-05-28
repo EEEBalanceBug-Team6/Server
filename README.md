@@ -19,8 +19,8 @@
 - [x]  Add a POST request that also adds data to the “data” json.
 - [x]  Extend API contract with the methods needed for ESP32 communication.
 - [x]  Test the checkOptions function.
-- [ ]  Finish the update and turn methods.
-- [ ]  Add code for backtracking of the rover in case it encounters a node it has seen before.
+- [x]  Finish the update and turn methods. (Added the turn as a response to the node method)
+- [x]  Add code for backtracking of the rover in case it encounters a node it has seen before.(This is done with a boolean)
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [ ]  Create placeholder functions that interact with ESP32 for movement (Based on feedback from the server).
