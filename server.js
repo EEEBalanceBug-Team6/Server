@@ -5,6 +5,7 @@ let IP = 'localhost' // remember to change this when using it for production
 let PORT = 8080
 
 const app = express();
+const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
 
 app.use(bodyParser.json());
 
@@ -141,7 +142,16 @@ app.post('/data/start', function(req, res){
 });
 
 app.post('/data/update', function(req, res) {
-    // updates the x and y coordinates periodically - can be used to request a Dijksta's update as well, with the reponse being the 200 only if the list was added to the data structure
+    var body = req.body;
+
+    var date = new Date(body.timestamp);
+
+    addLocation(date, parseInt(body.x), parseInt(body.y), body.direction);
+
+    console.log(date);
+
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('success');
 });
 
 app.post('/data/node', function(req, res){ 
