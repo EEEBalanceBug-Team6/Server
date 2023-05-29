@@ -18,6 +18,8 @@ class Graph{
     }
 }
 
+console.log('hi node!');
+
 module.exports = Graph;
 
 /*
