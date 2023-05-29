@@ -63,24 +63,21 @@ class Graph {
     }
 };
 
-const edges = [
-    {"vertices" : ['A', 'B'], "weight" : 4},
-    {"vertices" : ['A', 'C'], "weight" : 2},
-    {"vertices" : ['B', 'C'], "weight" : 1},
-    {"vertices" : ['B', 'D'], "weight" : 1},
-    {"vertices" : ['C', 'D'], "weight" : 8},
-    {"vertices" : ['C', 'E'], "weight" : 10}
-];
-
 var graph = new Graph(); 
 
-graph.addVertex('A');
+graph.addVertex('A'); // this format is useful in the server file
 graph.addVertex('B');
 graph.addVertex('C');
 graph.addVertex('D');
 graph.addVertex('E');
 
-graph.populate(edges);
+graph.addEdge(['A', 'B'], 4); // this format is useful in the server file
+graph.addEdge(['A', 'C'], 2);
+graph.addEdge(['B', 'C'], 1);
+graph.addEdge(['B', 'D'], 1);
+graph.addEdge(['C', 'D'], 8);
+graph.addEdge(['C', 'E'], 10);
+
 graph.Dijkstra();
 
 console.log(graph);
