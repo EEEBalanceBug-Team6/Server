@@ -19,7 +19,7 @@ class Graph{
 
     populate(edges){
         for(var edge of edges){
-            this.addEdge(edge.vertices, edge.weight); // works
+            this.addEdge(edge.vertices, edge.weight); // WORKS
         }
     }
 }
