@@ -26,13 +26,20 @@ class Graph {
     }
 
     Dijkstra(){
-        var start = this.vertices[0];
-        var pointer = this.vertices[0];
         for(const vertex of this.vertices){
-            if(vertex !== pointer){
-                this.shortestTree[vertex] = {"distance" : Infinity, "previous" : pointer};
+            if(vertex !== this.vertices[0]){
+                this.shortestTree[vertex] = {"distance" : Infinity, "previous" : this.vertices[0]};
             } else {
-                this.shortestTree[vertex] = {"distance" : 0, "previous" : pointer};
+                this.shortestTree[vertex] = {"distance" : 0, "previous" : this.vertices[0]};
+            }
+        }
+
+        for(const parent in this.graph){
+            for(const child in this.graph[parent]){
+                if(this.graph[parent][child] + this.shortestTree[parent].distance <= this.shortestTree[child].distance){
+                    this.shortestTree[child].distance = this.graph[parent][child] + this.shortestTree[parent].distance;
+                    this.shortestTree[child].previous = parent;
+                }
             }
         }
     }
@@ -55,13 +62,4 @@ graph.Dijkstra();
 console.log(graph);
 
 module.exports = Graph;
-
-/*
-
-{
-    parent : {child1 : weight1, child2 : weight2}
-}
-
-
-*/
 
