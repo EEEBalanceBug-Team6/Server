@@ -24,21 +24,30 @@ class Graph {
     }
 
     Dijkstra(start, end){
-        var visited = [start];
-        var last = start;
-        while(last!==end){
-            var min = Infinity;
-            console.log(last);
-            var value = this[last];
-            for(const key in value){
-                if (value[key] < min){
-                    min = value[key];
-                    var min_key = key;
-                }
+        var visited = {start : {"distance" : 0, "nodes" : []}};
+        var pointer = start;
+
+        for(const key in this[pointer]){
+            if(visited.hasOwnProperty(key)){
+
+            } else {
+                visited[key] = [key];
             }
-            last = min_key;
-            visited.push(min_key);
         }
+
+        // while(last!==end){
+        //     var min = Infinity;
+        //     console.log(last);
+        //     var value = this[last];
+        //     for(const key in value){
+        //         if (value[key] < min){
+        //             min = value[key];
+        //             var min_key = key;
+        //         }
+        //     }
+        //     last = min_key;
+        //     visited.push(min_key);
+        // }
         return visited;
     }
 };
