@@ -12,15 +12,6 @@ app.use(bodyParser.json());
 
 var graph = new Graph(); // this is the graph imported from the graph file
 
-// graph.addEdge(['A', 'B'], 4);
-// graph.addEdge(['A', 'C'], 2);
-// graph.addEdge(['B', 'C'], 1);
-// graph.addEdge(['B', 'D'], 1);
-// graph.addEdge(['C', 'D'], 8);
-// graph.addEdge(['C', 'E'], 10);
-
-// console.log(graph);
-
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
@@ -146,6 +137,9 @@ app.post('/data/start', function(req, res){
     var body = req.body; 
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
+    graph.addVertex(previousNode);
+
+    console.log(graph);
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success'); // pick any option available and put it into a variable that is sent along with the next request.
@@ -172,6 +166,7 @@ app.post('/data/node', function(req, res){
 
     if (ID === -1){ 
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
+        graph.addVertex(previousNode + 1);
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, previousNode + 1], body.weight);
@@ -186,6 +181,7 @@ app.post('/data/node', function(req, res){
 
     checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
 
+    console.log(graph);
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     res.writeHead(200, {'Content-Type': 'application/json'});
