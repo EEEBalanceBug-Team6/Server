@@ -1,4 +1,4 @@
-import * as graphFile from './graph.js';
+const Graph = require('./graph.js')
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -10,7 +10,7 @@ const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/Lo
 
 app.use(bodyParser.json());
 
-var graph = graphFile.Graph(); // this is the graph imported from the graph file
+var graph = new Graph(); // this is the graph imported from the graph file
 
 graph.addEdge(['A', 'B'], 4);
 graph.addEdge(['A', 'C'], 2);

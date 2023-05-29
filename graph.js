@@ -1,4 +1,4 @@
-export class Graph{
+class Graph{
     constructor(){
         this.graph = {};
     }
@@ -17,6 +17,8 @@ export class Graph{
         }
     }
 }
+
+module.exports = Graph;
 
 /*
 
