@@ -1,3 +1,4 @@
+import * as graphFile from './graph.js';
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -8,6 +9,17 @@ const app = express();
 const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
 
 app.use(bodyParser.json());
+
+var graph = graphFile.Graph(); // this is the graph imported from the graph file
+
+graph.addEdge(['A', 'B'], 4);
+graph.addEdge(['A', 'C'], 2);
+graph.addEdge(['B', 'C'], 1);
+graph.addEdge(['B', 'D'], 5);
+graph.addEdge(['C', 'D'], 8);
+graph.addEdge(['C', 'E'], 10);
+
+console.log(graph);
 
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 
