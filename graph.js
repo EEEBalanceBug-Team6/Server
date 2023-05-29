@@ -23,9 +23,9 @@ class Graph {
         }
     }
 
-    dijkstra(start, end){
-        var visited = [start]
-        var last = start
+    Dijkstra(start, end){
+        var visited = [start];
+        var last = start;
         while(last!==end){
             var min = Infinity;
             console.log(last);
@@ -35,13 +35,13 @@ class Graph {
                     min = value[key];
                     var min_key = key;
                 }
-                last = min_key;
-                visited.push(min_key);
             }
+            last = min_key;
+            visited.push(min_key);
         }
-        return visited
+        return visited;
     }
-}
+};
 
 const edges = [
     {"vertices" : ['A', 'B'], "weight" : 4},
@@ -50,7 +50,7 @@ const edges = [
     {"vertices" : ['B', 'D'], "weight" : 1},
     {"vertices" : ['C', 'D'], "weight" : 8},
     {"vertices" : ['C', 'E'], "weight" : 10}
-]
+];
 
 var graph = new Graph();
 
