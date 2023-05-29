@@ -1,4 +1,4 @@
-class Graph{
+class Graph {
     constructor(){
         this.graph = {};
     }
@@ -22,8 +22,41 @@ class Graph{
             this.addEdge(edge.vertices, edge.weight); // WORKS
         }
     }
+
+    dijkstra(start, end){
+        var visited = [start]
+        var last = start
+        while(last!==end){
+            var min = Infinity;
+            console.log(last);
+            var value = this[last];
+            for(const key in value){
+                if (value[key] < min){
+                    min = value[key];
+                    var min_key = key;
+                }
+                last = min_key;
+                visited.push(min_key);
+            }
+        }
+        return visited
+    }
 }
 
+const edges = [
+    {"vertices" : ['A', 'B'], "weight" : 4},
+    {"vertices" : ['A', 'C'], "weight" : 2},
+    {"vertices" : ['B', 'C'], "weight" : 1},
+    {"vertices" : ['B', 'D'], "weight" : 1},
+    {"vertices" : ['C', 'D'], "weight" : 8},
+    {"vertices" : ['C', 'E'], "weight" : 10}
+]
+
+var graph = new Graph();
+
+graph.populate(edges);
+
+console.log(graph);
 
 module.exports = Graph;
 

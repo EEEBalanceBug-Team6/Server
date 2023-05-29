@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 
 var graph = new Graph(); // this is the graph imported from the graph file
 
-graph.addEdge(['A', 'B'], 4);
-graph.addEdge(['A', 'C'], 2);
-graph.addEdge(['B', 'C'], 1);
-graph.addEdge(['B', 'D'], 1);
-graph.addEdge(['C', 'D'], 8);
-graph.addEdge(['C', 'E'], 10);
+// graph.addEdge(['A', 'B'], 4);
+// graph.addEdge(['A', 'C'], 2);
+// graph.addEdge(['B', 'C'], 1);
+// graph.addEdge(['B', 'D'], 1);
+// graph.addEdge(['C', 'D'], 8);
+// graph.addEdge(['C', 'E'], 10);
 
-console.log(graph);
+// console.log(graph);
 
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 
