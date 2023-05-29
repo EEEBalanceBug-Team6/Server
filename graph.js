@@ -1,6 +1,8 @@
 class Graph {
-    constructor(){
+    constructor(IDs){
         this.graph = {};
+        this.vertices = IDs;
+        this.shortestTree = {};
     }
 
     addEdge(edgelist, weight){ // loops in the graph are okay, Dijkstra's should be able to deal with it
@@ -23,32 +25,16 @@ class Graph {
         }
     }
 
-    Dijkstra(start, end){
-        var visited = {start : {"distance" : 0, "nodes" : []}};
-        var pointer = start;
-
-        for(const key in this[pointer]){
-            if(visited.hasOwnProperty(key)){
-
+    Dijkstra(){
+        var start = this.vertices[0];
+        var pointer = this.vertices[0];
+        for(const vertex of this.vertices){
+            if(vertex !== pointer){
+                this.shortestTree[vertex] = {"distance" : Infinity, "previous" : pointer};
             } else {
-                visited[key] = [key];
+                this.shortestTree[vertex] = {"distance" : 0, "previous" : pointer};
             }
         }
-
-        // while(last!==end){
-        //     var min = Infinity;
-        //     console.log(last);
-        //     var value = this[last];
-        //     for(const key in value){
-        //         if (value[key] < min){
-        //             min = value[key];
-        //             var min_key = key;
-        //         }
-        //     }
-        //     last = min_key;
-        //     visited.push(min_key);
-        // }
-        return visited;
     }
 };
 
@@ -61,9 +47,10 @@ const edges = [
     {"vertices" : ['C', 'E'], "weight" : 10}
 ];
 
-var graph = new Graph();
+var graph = new Graph(['A', 'B', 'C', 'D', 'E']); 
 
 graph.populate(edges);
+graph.Dijkstra();
 
 console.log(graph);
 
