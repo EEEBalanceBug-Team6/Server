@@ -1,8 +1,14 @@
 class Graph {
-    constructor(IDs){
+    constructor(){
         this.graph = {};
-        this.vertices = IDs;
+        this.vertices = [];
         this.shortestTree = {};
+    }
+
+    addVertex(vertex){
+        if(!this.vertices.includes(vertex)){
+            this.vertices.push(vertex);
+        }
     }
 
     addEdge(edgelist, weight){ // loops in the graph are okay, Dijkstra's should be able to deal with it
@@ -66,7 +72,13 @@ const edges = [
     {"vertices" : ['C', 'E'], "weight" : 10}
 ];
 
-var graph = new Graph(['A', 'B', 'C', 'D', 'E']); 
+var graph = new Graph(); 
+
+graph.addVertex('A');
+graph.addVertex('B');
+graph.addVertex('C');
+graph.addVertex('D');
+graph.addVertex('E');
 
 graph.populate(edges);
 graph.Dijkstra();

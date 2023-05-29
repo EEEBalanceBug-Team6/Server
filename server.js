@@ -160,8 +160,6 @@ app.post('/data/update', function(req, res) {
 
     addLocation(date, parseInt(body.x), parseInt(body.y), body.direction);
 
-    console.log(date);
-
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
 });
@@ -177,18 +175,18 @@ app.post('/data/node', function(req, res){
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, previousNode + 1], body.weight);
+        graph.addEdge([previousNode, previousNode + 1], body.weight);
         
         previousNode += 1;
     } else {
         addEdge([previousNode, ID], body.weight);
+        graph.addEdge([previousNode, ID], body.weight);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
     checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
-
-    console.log(lookUpOption(lookUpCoordinates(body.x, body.y)));
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(lookUpOption(lookUpCoordinates(body.x, body.y)))); // sends as a response a json containing the options explored, helps pick the next option to be taken.
