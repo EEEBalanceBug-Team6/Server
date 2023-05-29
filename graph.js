@@ -43,6 +43,18 @@ class Graph {
             }
         }
     }
+
+    reconstruct(end){
+        var returnList = [end];
+        var pointer = end;
+
+        while(pointer !== this.vertices[0]){
+            returnList.push(this.shortestTree[pointer].previous);
+            pointer = this.shortestTree[pointer].previous
+        }
+
+        return returnList.reverse();
+    }
 };
 
 const edges = [
@@ -60,6 +72,7 @@ graph.populate(edges);
 graph.Dijkstra();
 
 console.log(graph);
+console.log(graph.reconstruct('E'));
 
 module.exports = Graph;
 
