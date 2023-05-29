@@ -16,9 +16,14 @@ class Graph{
             this.graph[edgelist[0]][edgelist[1]] = weight;
         }
     }
+
+    populate(edges){
+        for(var edge of edges){
+            this.addEdge(edge.vertices, edge.weight); // works
+        }
+    }
 }
 
-console.log('hi node!');
 
 module.exports = Graph;
 

@@ -15,7 +15,7 @@ var graph = new Graph(); // this is the graph imported from the graph file
 graph.addEdge(['A', 'B'], 4);
 graph.addEdge(['A', 'C'], 2);
 graph.addEdge(['B', 'C'], 1);
-graph.addEdge(['B', 'D'], 5);
+graph.addEdge(['B', 'D'], 1);
 graph.addEdge(['C', 'D'], 8);
 graph.addEdge(['C', 'E'], 10);
 
