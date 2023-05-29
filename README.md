@@ -22,9 +22,11 @@
 - [x]  Finish the update and turn methods. (Added the turn as a response to the node method)
 - [x]  Add code for backtracking of the rover in case it encounters a node it has seen before.(This is done with a boolean)
 - [x]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
+- [ ]  Test the Dijkstra's code using the debug statements recently added.
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [ ]  Send output of data structure to database.
+- [ ]  (Optional) Refactor the node data structures to be classes for more encapsulation.
 
 ## Notes on Tasks
 
