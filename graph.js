@@ -28,9 +28,9 @@ class Graph {
     Dijkstra(){
         for(const vertex of this.vertices){
             if(vertex !== this.vertices[0]){
-                this.shortestTree[vertex] = {"distance" : Infinity, "previous" : this.vertices[0]};
+                this.shortestTree[vertex] = {"distance" : Infinity, "previous" : this.vertices[0].toString()};
             } else {
-                this.shortestTree[vertex] = {"distance" : 0, "previous" : this.vertices[0]};
+                this.shortestTree[vertex] = {"distance" : 0, "previous" : this.vertices[0].toString()};
             }
         }
 
