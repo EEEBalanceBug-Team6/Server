@@ -208,6 +208,8 @@ app.get('/data/clear', function(req, res){
         "shortest" : []
     };
 
+    graph = new Graph();
+
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
 });
