@@ -1,9 +1,13 @@
-const Graph = require('./graph.js')
+const Graph = require('./graph.js');
+const mysql = require('mysql');
+const db = require('./db.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-let IP = '0.0.0.0' // remember to change this when using it for production - you have to use the public IPv4 address given by the ec2.
+let IP = '0.0.0.0'
 let PORT = 8080
+
+const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
 
 const app = express();
 const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
@@ -109,6 +113,12 @@ function shortestList(ID){
 app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Welcome to Group 6\'s server!');
+
+    connectDB.query('SELECT * FROM PERSONS', function(err, result, fields){
+        if(err) throw err;
+        console.log(result);
+        console.log(fields);
+    });
 });
 
 app.get('/client', function(req, res){
