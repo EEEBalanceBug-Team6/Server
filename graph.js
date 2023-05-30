@@ -48,7 +48,7 @@ class Graph {
         var returnList = [end];
         var pointer = end;
 
-        while(pointer !== this.vertices[0]){
+        while(pointer !== this.vertices[0].toString()){
             returnList.push(this.shortestTree[pointer].previous);
             pointer = this.shortestTree[pointer].previous
         }

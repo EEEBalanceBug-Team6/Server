@@ -68,7 +68,7 @@ function checkOption(direction, ID){
         if(vertice.id === ID){
             // means you have found the node in the list of nodes already traversed
 
-            keys = Object.keys(vertice.options);
+            let keys = Object.keys(vertice.options);
 
             if (keys.includes(direction)) {
                 vertice.options[direction] = true;
@@ -78,7 +78,7 @@ function checkOption(direction, ID){
 }
 
 function lookUpOption(ID){
-    returnval = -1; // can be used for an error message
+    let returnval = -1; // can be used for an error message
     alldata.vertices.forEach(vertice => {
         if(vertice.id === ID){
             returnval = vertice.options;
@@ -95,6 +95,13 @@ function lookUpCoordinates(x, y){
         }
     });
     return ID;
+}
+
+function shortestList(ID){
+    let stringList = graph.reconstruct(ID.toString());
+    let intList = stringList.map(Number);
+    alldata["shortest"] = intList;
+    newdata["shortest"] = intList;
 }
 
 // add a function here that finds the shortest path between any two given vertices.
@@ -139,11 +146,13 @@ app.post('/data/start', function(req, res){
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
-    graph.Dijkstra();
-    console.log(graph);
-
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success'); // pick any option available and put it into a variable that is sent along with the next request.
+
+    graph.Dijkstra();
+    console.log(graph);
+    console.log(graph.reconstruct(previousNode.toString()));
+    shortestList(previousNode);
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
@@ -178,13 +187,15 @@ app.post('/data/node', function(req, res){
     }
 
     checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
-
-    graph.Dijkstra();
-    console.log(graph);
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(lookUpOption(lookUpCoordinates(body.x, body.y)))); // sends as a response a json containing the options explored, helps pick the next option to be taken.
+
+    graph.Dijkstra();
+    console.log(graph);
+    console.log(graph.reconstruct(previousNode.toString()));
+    shortestList(previousNode);
 
     // once receiving the response, remember to store the option you pick in a variable and send it as part of the next request.
 
