@@ -72,10 +72,10 @@ graph.addEdge(['B', 'D'], 1);
 graph.addEdge(['C', 'D'], 8);
 graph.addEdge(['C', 'E'], 10);
 
-graph.Dijkstra();
+// graph.Dijkstra();
 
-console.log(graph);
-console.log(graph.reconstruct('E'));
+// console.log(graph);
+// console.log(graph.reconstruct('E'));
 
 module.exports = Graph;
 

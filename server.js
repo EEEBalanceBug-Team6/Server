@@ -178,7 +178,7 @@ app.post('/data/node', function(req, res){
 
     checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
 
-    console.log(graph);
+    console.log(graph.Dijkstra());
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     res.writeHead(200, {'Content-Type': 'application/json'});
