@@ -25,12 +25,6 @@ class Graph {
         }
     }
 
-    populate(edges){
-        for(var edge of edges){
-            this.addEdge(edge.vertices, edge.weight); // WORKS
-        }
-    }
-
     Dijkstra(){
         for(const vertex of this.vertices){
             if(vertex !== this.vertices[0]){
