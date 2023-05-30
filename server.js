@@ -111,12 +111,6 @@ function shortestList(ID){
 app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Welcome to Group 6\'s server!');
-
-    connectDB.query('SELECT * FROM Persons', function(err, result, fields){
-        if(err) throw err;
-        console.log(result);
-        console.log(fields);
-    });
 });
 
 app.get('/client', function(req, res){
