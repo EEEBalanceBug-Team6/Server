@@ -50,7 +50,7 @@ function addVertice(id, x, y, options){
     };
     alldata.vertices.push(json);
     newdata.vertices.push(json);
-    // probably need another helper function here to check if one of the vertices is already a part of alldata, if it is then you need to use the addEdge function to create an edge between the two vertices.
+    graph.addVertex(id);
 }
 
 function addEdge(vertices, weight){ // note that you are assuming that the input is a string here
@@ -60,6 +60,7 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     };
     alldata.edges.push(json);
     newdata.edges.push(json);
+    graph.addEdge(vertices, weight);
 } 
 
 function checkOption(direction, ID){
@@ -137,7 +138,6 @@ app.post('/data/start', function(req, res){
     var body = req.body; 
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
-    graph.addVertex(previousNode);
 
     console.log(graph);
 
@@ -166,16 +166,13 @@ app.post('/data/node', function(req, res){
 
     if (ID === -1){ 
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
-        graph.addVertex(previousNode + 1);
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, previousNode + 1], body.weight);
-        graph.addEdge([previousNode, previousNode + 1], body.weight);
         
         previousNode += 1;
     } else {
         addEdge([previousNode, ID], body.weight);
-        graph.addEdge([previousNode, ID], body.weight);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
