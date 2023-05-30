@@ -8,14 +8,12 @@ let IP = '0.0.0.0'
 let PORT = 8080
 
 const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
-
 const app = express();
 const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
 
 app.use(bodyParser.json());
 
 var graph = new Graph(); // this is the graph imported from the graph file
-
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
@@ -114,7 +112,7 @@ app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Welcome to Group 6\'s server!');
 
-    connectDB.query('SELECT * FROM PERSONS', function(err, result, fields){
+    connectDB.query('SELECT * FROM Persons', function(err, result, fields){
         if(err) throw err;
         console.log(result);
         console.log(fields);
