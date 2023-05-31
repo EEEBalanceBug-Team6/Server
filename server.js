@@ -132,6 +132,7 @@ app.get('/client/datadump', function(req, res){
         "status" : "success",
         "data" : newdata
     };
+    console.log(data);
     res.end(JSON.stringify(data));
     newdata = {
         "locations" : [], 
@@ -152,8 +153,11 @@ app.post('/data/start', function(req, res){
     res.end('success'); // pick any option available and put it into a variable that is sent along with the next request.
 
     graph.Dijkstra();
+    console.log("--------------------------------------------------------------------------------------------------------------------------------");
+    console.log("Current Vertex: " + previousNode);
     console.log(graph);
     console.log(graph.reconstruct(previousNode.toString()));
+    console.log("--------------------------------------------------------------------------------------------------------------------------------");
     shortestList(previousNode);
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
@@ -195,8 +199,11 @@ app.post('/data/node', function(req, res){
     res.end(JSON.stringify(lookUpOption(lookUpCoordinates(body.x, body.y)))); // sends as a response a json containing the options explored, helps pick the next option to be taken.
 
     graph.Dijkstra();
+    console.log("--------------------------------------------------------------------------------------------------------------------------------");
+    console.log("Current Vertex: " + previousNode);
     console.log(graph);
     console.log(graph.reconstruct(previousNode.toString()));
+    console.log("--------------------------------------------------------------------------------------------------------------------------------");
     shortestList(previousNode);
 
     // once receiving the response, remember to store the option you pick in a variable and send it as part of the next request.
