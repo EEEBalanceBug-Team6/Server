@@ -4,8 +4,8 @@ const db = require('./db.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-let IP = '0.0.0.0'
-let PORT = 8080
+let IP = '0.0.0.0';
+let PORT = 8080;
 
 const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
 const app = express();
