@@ -234,6 +234,14 @@ app.get('/data/clear', function(req, res){
     res.end('success');
 });
 
+app.get('/rover/begin', function(req, res){
+    // helper method in case you need to manually control the movement of the rover
+});
+
+app.get('/rover/rebalance', function(req, res){
+    // helper method in case you need the rover to re-orient itself
+});
+
 //If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
 
 app.listen(PORT, IP, function(err){
