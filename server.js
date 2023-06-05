@@ -113,6 +113,12 @@ app.get('/', function(req, res){
     res.end('Welcome to Group 6\'s server!');
 });
 
+app.get('/test', function(req, res){
+    console.log(req.query);
+
+    res.send('test page');
+});
+
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
@@ -179,7 +185,7 @@ app.get('/data/update', function(req, res) {
     addLocation(isodate, parseInt(body.x), parseInt(body.y), body.direction);
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('success');
+    res.end('');
 });
 
 app.get('/data/node', function(req, res){ 
