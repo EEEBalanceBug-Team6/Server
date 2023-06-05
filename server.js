@@ -142,7 +142,7 @@ app.get('/client/datadump', function(req, res){
     // WORKS
 }); 
 
-app.post('/data/start', function(req, res){
+app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.body; 
 
@@ -171,7 +171,7 @@ app.post('/data/start', function(req, res){
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
 
-app.post('/data/update', function(req, res) {
+app.get('/data/update', function(req, res) {
     var body = req.body;
     var date = new Date();
     var isodate = date.toISOString();
@@ -182,7 +182,7 @@ app.post('/data/update', function(req, res) {
     res.end('success');
 });
 
-app.post('/data/node', function(req, res){ 
+app.get('/data/node', function(req, res){ 
     var body = req.body; 
 
     ID = lookUpCoordinates(body.x, body.y);
