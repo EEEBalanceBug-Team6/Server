@@ -148,8 +148,17 @@ app.post('/data/start', function(req, res){
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
+    var options = body.options;
+    var response = "";
+    let option = Object.keys(options);
+    for(const optionKey of option){
+        if(!options[optionKey]){
+            response = optionKey;
+        }
+    }
+
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('success'); // pick any option available and put it into a variable that is sent along with the next request.
+    res.end(response); // pick any option available and put it into a variable that is sent along with the next request.
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
