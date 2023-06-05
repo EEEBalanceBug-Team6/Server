@@ -23,12 +23,12 @@
 - [x]  Add code for backtracking of the rover in case it encounters a node it has seen before.(This is done with a boolean)
 - [x]  Write Dijkstra’s Algorithm equivalent on data structure in javascript.
 - [x]  Test the Dijkstra's code using the debug statements recently added.
+- [x]  Test new node response.
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [ ]  Send output of data structure to database.
 - [ ]  Refactor the node, start and update methods with sam's suggestions.
 - [ ]  Change data methods from post to get, add queries in the URL instead of a request json. 
-- [ ]  Test new node response.
 - [ ]  Use the Math triangulation module to check what the location is, 2 or 3 beacons depending on the compass module.
 
 ## Notes on Tasks
