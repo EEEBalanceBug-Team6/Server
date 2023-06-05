@@ -178,11 +178,13 @@ app.get('/data/start', function(req, res){
 });
 
 app.get('/data/update', function(req, res) {
-    var body = req.body;
+    var body = req.query;
     var date = new Date();
     var isodate = date.toISOString();
 
-    addLocation(isodate, parseInt(body.x), parseInt(body.y), body.direction);
+    console.log(req.query);
+
+    addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('');

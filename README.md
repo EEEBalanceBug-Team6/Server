@@ -9,6 +9,7 @@
 - **sendFile function:** https://www.geeksforgeeks.org/express-js-res-sendfile-function/
 - **Filesystem nodejs:** https://www.w3schools.com/nodejs/nodejs_filesystem.asp
 - **Routing:** https://expressjs.com/en/guide/routing.html#route-parameters
+- **URL encode json:** https://onlinejsontools.com/url-encode-json
 
 ## Tasks
 
