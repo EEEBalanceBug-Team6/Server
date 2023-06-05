@@ -200,13 +200,23 @@ app.get('/data/update', function(req, res) {
 });
 
 app.get('/data/node', function(req, res){ 
-    var body = req.body; 
+    var body = req.query; 
 
     ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     checkOption(body.parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
     if (ID === -1){ 
-        addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), body.options); // are we storing previousNode + 1 or previousNode?
+        let options = {}; // initializer json for options
+
+        if(typeof req.query.options === 'string'){
+            options[parseInt(req.query.options)] = false;
+        } else {
+            for(const option of req.query.options){
+                options[parseInt(option)] = false;
+            }
+        } // creates equivalent of the json in the same way as before, except we are using query params instead
+
+        addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, previousNode + 1], body.weight);
@@ -220,16 +230,15 @@ app.get('/data/node', function(req, res){
     checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
-    var options = lookUpOption(lookUpCoordinates(body.x, body.y), body.childDirection);
+    var options = lookUpOption(lookUpCoordinates(parseInt(body.x), parseInt(body.y)), body.childDirection);
     var response = options.backup;
-    let option = Object.keys(options);
+    let option = Object.keys(options.options);
     for(const optionKey of option){
         if(!options[optionKey]){
             response = optionKey;
             break;
         }
     }
-
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // sends as a response a json containing the options explored, helps pick the next option to be taken.
