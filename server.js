@@ -152,6 +152,8 @@ app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.body; 
 
+    console.log(req.query);
+
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
 
     var options = body.options;
@@ -192,6 +194,7 @@ app.get('/data/update', function(req, res) {
 
 app.get('/data/node', function(req, res){ 
     var body = req.body; 
+    console.log(req.query);
 
     ID = lookUpCoordinates(body.x, body.y);
     checkOption(body.parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
