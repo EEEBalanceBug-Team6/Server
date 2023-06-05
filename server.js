@@ -132,7 +132,6 @@ app.get('/client/datadump', function(req, res){
         "status" : "success",
         "data" : newdata
     };
-    console.log(data);
     res.end(JSON.stringify(data));
     newdata = {
         "locations" : [], 
@@ -165,10 +164,10 @@ app.post('/data/start', function(req, res){
 
 app.post('/data/update', function(req, res) {
     var body = req.body;
+    var date = new Date();
+    var isodate = date.toISOString();
 
-    var date = new Date(body.timestamp);
-
-    addLocation(date, parseInt(body.x), parseInt(body.y), body.direction);
+    addLocation(isodate, parseInt(body.x), parseInt(body.y), body.direction);
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('success');
