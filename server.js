@@ -150,8 +150,8 @@ app.get('/client/datadump', function(req, res){
 
 app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
-    var body = req.query; 
-    var options = {};
+    var body = req.query; // changed from req.body to req.query
+    var options = {}; // initializer json for options
 
     if(typeof req.query.options === 'string'){
         options[parseInt(req.query.options)] = false;
@@ -159,20 +159,18 @@ app.get('/data/start', function(req, res){
         for(const option of req.query.options){
             options[parseInt(option)] = false;
         }
-    }
-
-    console.log(options);
+    } // creates equivalent of the json in the same way as before, except we are using query params instead
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), options);
 
-    var options = body.options;
     var response = "";
     let option = Object.keys(options);
     for(const optionKey of option){
         if(!options[optionKey]){
             response = optionKey;
+            break;
         }
-    }
+    } // logic to send the rover the next option bearing to go to
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // pick any option available and put it into a variable that is sent along with the next request.
@@ -203,9 +201,8 @@ app.get('/data/update', function(req, res) {
 
 app.get('/data/node', function(req, res){ 
     var body = req.body; 
-    console.log(req.query);
 
-    ID = lookUpCoordinates(body.x, body.y);
+    ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     checkOption(body.parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
     if (ID === -1){ 
@@ -229,6 +226,7 @@ app.get('/data/node', function(req, res){
     for(const optionKey of option){
         if(!options[optionKey]){
             response = optionKey;
+            break;
         }
     }
 
