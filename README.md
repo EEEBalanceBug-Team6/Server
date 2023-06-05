@@ -26,7 +26,8 @@
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [ ]  Send output of data structure to database.
-- [ ]  Refactor the node, start and update methods with sam's suggestions. 
+- [ ]  Refactor the node, start and update methods with sam's suggestions.
+- [ ]  Change data methods from post to get, add queries in the URL instead of a request json. 
 - [ ]  Use the Math triangulation module to check what the location is, 2 or 3 beacons depending on the compass module.
 
 ## Notes on Tasks
