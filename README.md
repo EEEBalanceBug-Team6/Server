@@ -28,6 +28,7 @@
 - [ ]  Send output of data structure to database.
 - [ ]  Refactor the node, start and update methods with sam's suggestions.
 - [ ]  Change data methods from post to get, add queries in the URL instead of a request json. 
+- [ ]  Test new node response.
 - [ ]  Use the Math triangulation module to check what the location is, 2 or 3 beacons depending on the compass module.
 
 ## Notes on Tasks
