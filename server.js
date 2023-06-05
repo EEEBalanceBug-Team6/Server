@@ -150,11 +150,20 @@ app.get('/client/datadump', function(req, res){
 
 app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
-    var body = req.body; 
+    var body = req.query; 
+    var options = {};
 
-    console.log(req.query);
+    if(typeof req.query.options === 'string'){
+        options[parseInt(req.query.options)] = false;
+    } else {
+        for(const option of req.query.options){
+            options[parseInt(option)] = false;
+        }
+    }
 
-    addVertice(previousNode, parseInt(body.x), parseInt(body.y), body.options);
+    console.log(options);
+
+    addVertice(previousNode, parseInt(body.x), parseInt(body.y), options);
 
     var options = body.options;
     var response = "";
