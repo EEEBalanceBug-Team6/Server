@@ -113,6 +113,12 @@ app.get('/', function(req, res){
     res.end('Welcome to Group 6\'s server!');
 });
 
+app.get('/test', function(req, res){
+    console.log(req.query);
+
+    res.send('test page');
+});
+
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
@@ -142,7 +148,7 @@ app.get('/client/datadump', function(req, res){
     // WORKS
 }); 
 
-app.post('/data/start', function(req, res){
+app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.body; 
 
@@ -171,18 +177,20 @@ app.post('/data/start', function(req, res){
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
 
-app.post('/data/update', function(req, res) {
-    var body = req.body;
+app.get('/data/update', function(req, res) {
+    var body = req.query;
     var date = new Date();
     var isodate = date.toISOString();
 
-    addLocation(isodate, parseInt(body.x), parseInt(body.y), body.direction);
+    console.log(req.query);
+
+    addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('success');
+    res.end('');
 });
 
-app.post('/data/node', function(req, res){ 
+app.get('/data/node', function(req, res){ 
     var body = req.body; 
 
     ID = lookUpCoordinates(body.x, body.y);
