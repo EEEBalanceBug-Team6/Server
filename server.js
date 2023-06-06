@@ -10,7 +10,7 @@ let PORT = 8080;
 
 const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
 const app = express();
-const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });
+const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" }); // try this without the timezone
 
 app.use(bodyParser.json());
 
