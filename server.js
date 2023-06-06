@@ -1,7 +1,7 @@
 const Graph = require('./util/graph.js');
-const mysql = require('mysql');
 const db = require('./util/db.js');
 const Queries = require('./util/queries.js');
+const mysql = require('mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
 
