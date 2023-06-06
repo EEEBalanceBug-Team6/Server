@@ -156,10 +156,10 @@ app.get('/data/start', function(req, res){
     var options = {}; // initializer json for options
 
     if(typeof req.query.options === 'string'){
-        options[parseInt(req.query.options)] = false;
+        options[req.query.options] = false;
     } else {
         for(const option of req.query.options){
-            options[parseInt(option)] = false;
+            options[option] = false;
         }
     } // creates equivalent of the json in the same way as before, except we are using query params instead
 
@@ -209,12 +209,12 @@ app.get('/data/node', function(req, res){
 
     if (ID === -1){ // TEST THIS PART
         let options = {}; // initializer json for options
-
+        
         if(typeof req.query.options === 'string'){
-            options[parseInt(req.query.options)] = false;
+            options[req.query.options] = false;
         } else {
-            for(const option of req.query.options){
-                options[parseInt(option)] = false;
+            for(let option of req.query.options){
+                options[option] = false;
             }
         } // creates equivalent of the json in the same way as before, except we are using query params instead
 
@@ -241,7 +241,6 @@ app.get('/data/node', function(req, res){
     let option = Object.keys(options.options);
     //console.log(option);
     for(let optionKey of option){
-        console.log(options.options[optionKey]);
         if(!options.options[optionKey]){ // remember that this is nested in another object
             response = optionKey;
             break;
