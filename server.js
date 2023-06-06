@@ -138,7 +138,7 @@ app.get('/client/datadump', function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
-        "data" : newdata
+        "data" : alldata
     };
     res.end(JSON.stringify(data));
     newdata = {
