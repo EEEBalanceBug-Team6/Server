@@ -65,8 +65,6 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     alldata.edges.push(json);
     newdata.edges.push(json);
     graph.addEdge(vertices, weight);
-    vertices.reverse()
-    graph.addEdge(vertices, weight);
 } 
 
 function checkOption(direction, ID){
@@ -226,10 +224,12 @@ app.get('/data/node', function(req, res){
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, maxUpTillNow], parseInt(body.weight));
-        
+        addEdge([maxUpTillNow, previousNode], parseInt(body.weight));
+
         previousNode = maxUpTillNow;
     } else {
         addEdge([previousNode, ID], parseInt(body.weight));
+        addEdge([ID, previousNode], parseInt(body.weight));
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
