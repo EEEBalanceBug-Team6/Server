@@ -137,7 +137,7 @@ app.get('/client/datadump', function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
-        "data" : newdata
+        "data" : alldata
     };
     res.end(JSON.stringify(data));
     newdata = {
@@ -234,8 +234,10 @@ app.get('/data/node', function(req, res){
     var options = lookUpOption(lookUpCoordinates(parseInt(body.x), parseInt(body.y)), body.childDirection);
     var response = options.backup;
     let option = Object.keys(options.options);
-    for(const optionKey of option){
-        if(!options[optionKey]){
+    //console.log(option);
+    for(let optionKey of option){
+        console.log(options.options[optionKey]);
+        if(!options.options[optionKey]){ // remember that this is nested in another object
             response = optionKey;
             break;
         }
