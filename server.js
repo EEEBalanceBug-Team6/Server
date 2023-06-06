@@ -207,10 +207,8 @@ app.get('/data/node', function(req, res){
     ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     checkOption(body.parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
-    if (ID === -1){ 
+    if (ID === -1){ // TEST THIS PART
         let options = {}; // initializer json for options
-
-        previousNode = maxUpTillNow;
 
         if(typeof req.query.options === 'string'){
             options[parseInt(req.query.options)] = false;
@@ -220,12 +218,14 @@ app.get('/data/node', function(req, res){
             }
         } // creates equivalent of the json in the same way as before, except we are using query params instead
 
-        addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), options); // are we storing previousNode + 1 or previousNode?
+        maxUpTillNow += 1;
+
+        addVertice(maxUpTillNow, parseInt(body.x), parseInt(body.y), options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-        addEdge([previousNode, previousNode + 1], parseInt(body.weight));
+        addEdge([previousNode, maxUpTillNow], parseInt(body.weight));
         
-        maxUpTillNow = previousNode;
+        previousNode = maxUpTillNow;
     } else {
         addEdge([previousNode, ID], parseInt(body.weight));
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
