@@ -115,12 +115,6 @@ app.get('/', function(req, res){
     res.end('Welcome to Group 6\'s server!');
 });
 
-app.get('/test', function(req, res){
-    console.log(req.query);
-
-    res.send('test page');
-});
-
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
