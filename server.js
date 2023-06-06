@@ -65,6 +65,8 @@ function addEdge(vertices, weight){ // note that you are assuming that the input
     alldata.edges.push(json);
     newdata.edges.push(json);
     graph.addEdge(vertices, weight);
+    vertices.reverse()
+    graph.addEdge(vertices, weight);
 } 
 
 function checkOption(direction, ID){
@@ -138,7 +140,7 @@ app.get('/client/datadump', function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
-        "data" : alldata
+        "data" : newdata
     };
     res.end(JSON.stringify(data));
     newdata = {
