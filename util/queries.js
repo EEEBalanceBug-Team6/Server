@@ -3,8 +3,12 @@ class Queries{
         return "INSERT INTO locations (timestamp, x, y, direction) VALUES (" + location.timestamp + ", " + location.x + ", " + location.y + ", " + location.direction + ");";
     }
 
-    insertVertice(vertice){
-        return "INSERT INTO vertices (vid, x, y) VALUES (";
+    insertVertice(vertice){ // should cover adding to options table as well as vertices table
+        return;
+    }
+
+    insertEdge(edge){ // can cover just the edges table
+        return;
     }
 };
 
