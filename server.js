@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 
 var graph = new Graph(); // this is the graph imported from the graph file
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
+var maxUpTillNow = 0; // niche case, try to run the entire rover path test and you'll see why this is needed
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -209,6 +210,8 @@ app.get('/data/node', function(req, res){
     if (ID === -1){ 
         let options = {}; // initializer json for options
 
+        previousNode = maxUpTillNow;
+
         if(typeof req.query.options === 'string'){
             options[parseInt(req.query.options)] = false;
         } else {
@@ -222,7 +225,7 @@ app.get('/data/node', function(req, res){
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, previousNode + 1], parseInt(body.weight));
         
-        previousNode += 1;
+        maxUpTillNow = previousNode;
     } else {
         addEdge([previousNode, ID], parseInt(body.weight));
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?

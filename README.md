@@ -28,6 +28,7 @@
 - [x]  Complete Sam's suggestions (except triangulation).
 - [x]  Change data methods from post to get, add queries in the URL instead of a request json.
 - [ ]  Refactor previous node part because of bug found in the code.
+- [ ]  Test new logic for start, with maxUpTillNow instead.
 - [ ]  Modify docs to fulfill the new requirements, changes in update, start, node, methods, responses and requests.
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
