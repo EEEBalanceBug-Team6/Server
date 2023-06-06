@@ -220,11 +220,11 @@ app.get('/data/node', function(req, res){
         addVertice(previousNode + 1, parseInt(body.x), parseInt(body.y), options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-        addEdge([previousNode, previousNode + 1], body.weight);
+        addEdge([previousNode, previousNode + 1], parseInt(body.weight));
         
         previousNode += 1;
     } else {
-        addEdge([previousNode, ID], body.weight);
+        addEdge([previousNode, ID], parseInt(body.weight));
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
