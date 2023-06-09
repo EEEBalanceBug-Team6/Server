@@ -6,9 +6,7 @@ class Line{
         this.endy = y;
     }
 
-    updateLengths(x, y, l){
-        
-    }
+    updateValues
 };
 
 module.exports = Line;

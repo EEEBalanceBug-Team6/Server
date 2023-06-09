@@ -1,6 +1,7 @@
 const Graph = require('./util/graph.js');
 const db = require('./util/db.js');
 const Queries = require('./util/queries.js');
+const cors = require('cors');
 const mysql = require('mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -13,6 +14,7 @@ const app = express();
 const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" }); // try this without the timezone
 
 app.use(bodyParser.json());
+app.use(cors());
 
 var graph = new Graph(); // this is the graph imported from the graph file
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
