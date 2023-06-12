@@ -33,8 +33,8 @@
 - [x]  Modify docs to fulfill the new requirements, changes in update, start, node, methods, responses and requests.
 - [x]  Conduct complete test on start, update and node methods. 
 - [x]  Refactor the node URI for child and parent directions to work properly.
-- [ ]  Refactor weight using coordinate distance formula.
-- [ ]  Test node, I made changes to the checkoptions part, along with the let options and the new data addition part.
+- [x]  Refactor weight using coordinate distance formula.
+- [ ]  TEST WEIGHT, I made changes to the checkoptions part, along with the let options and the new data addition part. Also added distance formula implementation for weight.
 - [ ]  Use Sam's triangulation method.
 - [ ]  Add margin for error for node (width of the rover).
 - [ ]  Check if the last bullet point about response of update function has been implemented.

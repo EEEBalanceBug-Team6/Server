@@ -219,6 +219,7 @@ app.get('/data/update', function(req, res) {
 
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
+    var weight = Math.sqrt(Math.pow((parseInt(body.x) - prevx), 2) + Math.pow((parseInt(body.y) - prevy), 2));
 
     ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
@@ -238,14 +239,14 @@ app.get('/data/node', function(req, res){
         addVertice(maxUpTillNow, parseInt(body.x), parseInt(body.y), options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-        addEdge([previousNode, maxUpTillNow], parseInt(body.weight));
-        addEdge([maxUpTillNow, previousNode], parseInt(body.weight));
+        addEdge([previousNode, maxUpTillNow], weight);
+        addEdge([maxUpTillNow, previousNode], weight);
 
         previousNode = maxUpTillNow;
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
-        addEdge([previousNode, ID], parseInt(body.weight));
-        addEdge([ID, previousNode], parseInt(body.weight));
+        addEdge([previousNode, ID], weight);
+        addEdge([ID, previousNode], weight);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
         newdata.vertices.push(verticeReturn(ID)); // you want to push to new data after you have made sure it is up to date completely.
