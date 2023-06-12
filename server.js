@@ -65,7 +65,7 @@ function addVertice(id, x, y, options){
 
 function verticeReturn(ID){
     alldata.vertices.forEach(vertice => {
-        if(vertice.id == ID){
+        if(vertice.id === ID){
             return vertice;
         }
     });

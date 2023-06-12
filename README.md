@@ -34,6 +34,7 @@
 - [x]  Conduct complete test on start, update and node methods. 
 - [x]  Refactor the node URI for child and parent directions to work properly.
 - [x]  Refactor weight using coordinate distance formula.
+- [ ]  Debug vertice return which adds to newdata even if that was a vertice we had visited before.
 - [ ]  TEST WEIGHT, I made changes to the checkoptions part, along with the let options and the new data addition part. Also added distance formula implementation for weight.
 - [ ]  Use Sam's triangulation method.
 - [ ]  Add margin for error for node (width of the rover).
