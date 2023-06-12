@@ -180,6 +180,10 @@ app.get('/data/start', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // pick any option available and put it into a variable that is sent along with the next request.
 
+    parentDirection = response;
+    childDirection = ((parseInt(response)+180) % 360).toString();
+
+
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
     console.log("Current Vertex: " + previousNode);
@@ -252,6 +256,9 @@ app.get('/data/node', function(req, res){
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // sends as a response a json containing the options explored, helps pick the next option to be taken.
+
+    parentDirection = response;
+    childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
