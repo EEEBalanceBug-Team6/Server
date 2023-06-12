@@ -27,14 +27,16 @@
 - [x]  Test new node response.
 - [x]  Complete Sam's suggestions (except triangulation).
 - [x]  Change data methods from post to get, add queries in the URL instead of a request json.
-- [ ]  Refactor previous node part because of bug found in the code.
-- [ ]  Test new logic for node, with maxUpTillNow instead. In particular, run through the entire code for the rover.
-- [ ]  Check if data in datadump has been set back to 'newdata'.
-- [ ]  Modify docs to fulfill the new requirements, changes in update, start, node, methods, responses and requests.
+- [x]  Refactor previous node part because of bug found in the code.
+- [x]  Test new logic for node, with maxUpTillNow instead. In particular, run through the entire code for the rover.
+- [x]  Check if data in datadump has been set back to 'newdata'.
+- [x]  Modify docs to fulfill the new requirements, changes in update, start, node, methods, responses and requests.
+- [x]  Conduct complete test on start, update and node methods. 
+- [ ]  Use Sam's triangulation method
+- [ ]  Add marging for error for node (width of the rover).
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [ ]  Send output of data structure to database.
-- [ ]  Conduct complete test on start, update and node methods. 
 
 ## Notes on Tasks
 
