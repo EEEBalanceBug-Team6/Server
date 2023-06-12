@@ -183,6 +183,8 @@ app.get('/data/start', function(req, res){
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
+    console.log(parentDirection);
+    console.log(childDirection);
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
