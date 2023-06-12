@@ -20,9 +20,9 @@ var graph = new Graph(); // this is the graph imported from the graph file
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 var maxUpTillNow = 0; // niche case, try to run the entire rover path test and you'll see why this is needed
 var prevx = 0; // used to calculate the weight from the last node basically, reassgined when you reach a node
-var prevy = 0;
-var parentDirection = 90; // need to figure this out for the response to work properly
-var childDirection = 270;
+var prevy = 0; 
+var parentDirection;
+var childDirection;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -165,9 +165,6 @@ app.get('/data/start', function(req, res){
 
     addVertice(previousNode, parseInt(body.x), parseInt(body.y), options);
 
-    prevx = parseInt(body.x);
-    prevy = parseInt(body.y);
-
     var response = "";
     let option = Object.keys(options);
     for(const optionKey of option){
@@ -180,11 +177,13 @@ app.get('/data/start', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // pick any option available and put it into a variable that is sent along with the next request.
 
+    prevx = parseInt(body.x);
+    prevy = parseInt(body.y);
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
-    console.log(parentDirection);
-    console.log(childDirection);
+    console.log("Parent Direction:" + parentDirection);
+    console.log("Child Direction:" + childDirection);
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
@@ -214,7 +213,7 @@ app.get('/data/node', function(req, res){
     var body = req.query; 
 
     ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
-    checkOption(body.parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
+    checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
     if (ID === -1){ // TEST THIS PART
         let options = {}; // initializer json for options
@@ -242,7 +241,7 @@ app.get('/data/node', function(req, res){
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
     }
 
-    checkOption(body.childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
+    checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     var options = lookUpOption(lookUpCoordinates(parseInt(body.x), parseInt(body.y)), body.childDirection);
@@ -259,8 +258,13 @@ app.get('/data/node', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // sends as a response a json containing the options explored, helps pick the next option to be taken.
 
+    prevx = parseInt(body.x);
+    prevy = parseInt(body.y);
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
+
+    console.log("Parent Direction:" + parentDirection);
+    console.log("Child Direction:" + childDirection);
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
