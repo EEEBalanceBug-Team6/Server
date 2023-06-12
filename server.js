@@ -21,6 +21,8 @@ var previousNode = 0; // this variable needs to be used to configure edges betwe
 var maxUpTillNow = 0; // niche case, try to run the entire rover path test and you'll see why this is needed
 var prevx = 0; // used to calculate the weight from the last node basically, reassgined when you reach a node
 var prevy = 0;
+var parentDirection = 90; // need to figure this out for the response to work properly
+var childDirection = 270;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
