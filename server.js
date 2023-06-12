@@ -63,6 +63,14 @@ function addVertice(id, x, y, options){
     graph.addVertex(id);
 }
 
+function verticeReturn(ID){
+    alldata.vertices.forEach(vertice => {
+        if(vertice.id == ID){
+            return vertice;
+        }
+    });
+}
+
 function addEdge(vertices, weight){ // note that you are assuming that the input is a string here
     var json = {
         'vertices' : vertices, // list of vertices connected to the edge - assume first element is the origin node
@@ -215,16 +223,15 @@ app.get('/data/node', function(req, res){
     ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
-    if (ID === -1){ // TEST THIS PART
-        let options = {}; // initializer json for options
-        
+    if (ID === -1){ 
+        let options = {};
         if(typeof req.query.options === 'string'){
             options[req.query.options] = false;
         } else {
             for(let option of req.query.options){
                 options[option] = false;
             }
-        } // creates equivalent of the json in the same way as before, except we are using query params instead
+        }
 
         maxUpTillNow += 1;
 
@@ -235,13 +242,14 @@ app.get('/data/node', function(req, res){
         addEdge([maxUpTillNow, previousNode], parseInt(body.weight));
 
         previousNode = maxUpTillNow;
+        checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
         addEdge([previousNode, ID], parseInt(body.weight));
         addEdge([ID, previousNode], parseInt(body.weight));
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
-    }
-
-    checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
+        checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
+        newdata.vertices.push(verticeReturn(ID)); // you want to push to new data after you have made sure it is up to date completely.
+    } 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     var options = lookUpOption(lookUpCoordinates(parseInt(body.x), parseInt(body.y)), childDirection);
@@ -301,12 +309,6 @@ app.get('/data/clear', function(req, res){
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
 });
-
-app.get('/cv/reconstruct/', function(req, res){
-    // decides on what to do with the data received from the ESP32 for the CV.
-});
-
-//If the rover notices that it has already visited a node, it backtracks to the previous node. Need to implement this functionality on the server side as well.
 
 app.listen(PORT, IP, function(err){
     if (err) { console.log(err); }

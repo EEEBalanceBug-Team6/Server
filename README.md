@@ -32,8 +32,8 @@
 - [x]  Check if data in datadump has been set back to 'newdata'.
 - [x]  Modify docs to fulfill the new requirements, changes in update, start, node, methods, responses and requests.
 - [x]  Conduct complete test on start, update and node methods. 
+- [x]  Refactor the node URI for child and parent directions to work properly.
 - [ ]  Use Sam's triangulation method.
-- [ ]  Refactor the node URI for child and parent directions to work properly.
 - [ ]  Add margin for error for node (width of the rover).
 - [ ]  Check if the last bullet point about response of update function has been implemented.
 - [ ]  Check that newdata is updated even when you encounter a node that you have been to before. 
