@@ -115,7 +115,7 @@ function lookUpCoordinates(x, y){
             returnval[0] = vertice.id;
         }
     });
-    return returnval[0];
+    return returnval;
 }
 
 function shortestList(ID){
@@ -224,7 +224,8 @@ app.get('/data/node', function(req, res){
     var body = req.query; 
     var weight = Math.sqrt(Math.pow((parseInt(body.x) - prevx), 2) + Math.pow((parseInt(body.y) - prevy), 2));
 
-    ID = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
+    var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y));
+    var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
     if (ID === -1){ 
@@ -256,7 +257,7 @@ app.get('/data/node', function(req, res){
     } 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
-    var options = lookUpOption(lookUpCoordinates(parseInt(body.x), parseInt(body.y)), childDirection);
+    var options = lookUpOption(previousNode, childDirection);
     var response = options.backup;
     let option = Object.keys(options.options);
     //console.log(option);
@@ -293,6 +294,11 @@ app.get('/data/node', function(req, res){
 
 app.get('/data/clear', function(req, res){
     previousNode = 0;
+    maxUpTillNow = 0;
+    prevx = 0;
+    prevy = 0;
+    parentDirection = "";
+    childDirection = "";
 
     alldata = {
         "locations" : [], 
