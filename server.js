@@ -165,6 +165,8 @@ app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.query; // changed from req.body to req.query
     var options = {}; // initializer json for options
+    var x = parseInt(body.x); // change this based on triangulation
+    var y = parseInt(body.y);
 
     if(typeof req.query.options === 'string'){
         options[req.query.options] = false;
@@ -174,7 +176,7 @@ app.get('/data/start', function(req, res){
         }
     } // creates equivalent of the json in the same way as before, except we are using query params instead
 
-    addVertice(previousNode, parseInt(body.x), parseInt(body.y), options);
+    addVertice(previousNode, x, y, options);
 
     var response = "";
     let option = Object.keys(options);
@@ -188,8 +190,8 @@ app.get('/data/start', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // pick any option available and put it into a variable that is sent along with the next request.
 
-    prevx = parseInt(body.x);
-    prevy = parseInt(body.y);
+    prevx = x;
+    prevy = y;
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
@@ -222,10 +224,12 @@ app.get('/data/update', function(req, res) {
 
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
-    var weight = Math.sqrt(Math.pow((parseInt(body.x) - prevx), 2) + Math.pow((parseInt(body.y) - prevy), 2));
 
     var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y));
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
+    var x = parseInt(body.x); // change this based on triangulation and the marging for error found
+    var y = parseInt(body.y);
+    var weight = Math.floor(Math.sqrt(Math.pow((x - prevx), 2) + Math.pow((y - prevy), 2)));
     checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
     if (ID === -1){ 
@@ -240,7 +244,7 @@ app.get('/data/node', function(req, res){
 
         maxUpTillNow += 1;
 
-        addVertice(maxUpTillNow, parseInt(body.x), parseInt(body.y), options); // are we storing previousNode + 1 or previousNode?
+        addVertice(maxUpTillNow, x, y, options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
         addEdge([previousNode, maxUpTillNow], weight);
@@ -271,8 +275,8 @@ app.get('/data/node', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // sends as a response a json containing the options explored, helps pick the next option to be taken.
 
-    prevx = parseInt(body.x);
-    prevy = parseInt(body.y);
+    prevx = x;
+    prevy = y;
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
