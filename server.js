@@ -127,6 +127,21 @@ function shortestList(ID){
     newdata["shortest"] = intList;
 }
 
+function endReached(){
+    var reached = true;
+    alldata.vertices.forEach(vertice => {
+        optionList = Object.keys(vertice.options);
+        console.log(optionList);
+        for(option of optionList){
+            if(!vertice.options[option]){
+                console.log("The culprit is: " + option);
+                reached = false;
+            }
+        }
+    });
+    return reached;
+}
+
 // add a function here that finds the shortest path between any two given vertices.
 
 app.get('/', function(req, res){
@@ -151,7 +166,7 @@ app.get('/client/datadump', function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
-        "data" : newdata
+        "data" : alldata
     };
     res.end(JSON.stringify(data));
     newdata = {
@@ -271,12 +286,17 @@ app.get('/data/node', function(req, res){
 
     var options = lookUpOption(previousNode, childDirection);
     var response = options.backup;
-    let option = Object.keys(options.options);
-    //console.log(option);
-    for(let optionKey of option){
-        if(!options.options[optionKey]){ // remember that this is nested in another object
-            response = optionKey;
-            break;
+
+    if(endReached()){
+        response = "-1";
+    } else {
+        let option = Object.keys(options.options);
+        //console.log(option);
+        for(let optionKey of option){
+            if(!options.options[optionKey]){ // remember that this is nested in another object
+                response = optionKey;
+                break;
+            }
         }
     }
 
@@ -288,8 +308,7 @@ app.get('/data/node', function(req, res){
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
-    console.log("Parent Direction:" + parentDirection);
-    console.log("Child Direction:" + childDirection);
+    console.log("Reached the end?: " + endReached());
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
