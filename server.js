@@ -23,7 +23,7 @@ var prevx = 0; // used to calculate the weight from the last node basically, rea
 var prevy = 0; 
 var parentDirection;
 var childDirection;
-var margin = 0;
+var margin = 0; // based on the diameter of the rover: depends on live testing it
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -109,13 +109,13 @@ function lookUpOption(ID, backup){
 }
 
 function lookUpCoordinates(x, y){
-    var ID = -1;
+    var returnval = [-1, -1, -1]; // ID, x, y
     alldata.vertices.forEach(vertice => {
         if(vertice.x === x && vertice.y === y){
-            ID = vertice.id;
+            returnval[0] = vertice.id;
         }
     });
-    return ID;
+    return returnval[0];
 }
 
 function shortestList(ID){
