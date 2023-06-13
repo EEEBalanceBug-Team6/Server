@@ -24,6 +24,7 @@ var prevy = 0;
 var parentDirection;
 var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
+var lights = false;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -349,6 +350,22 @@ app.get('/data/clear', function(req, res){
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
+});
+
+app.get('/lights/ping', function(req, res) {
+    if(lights){
+        res.writeHead(200, {'Content-Type' : 'text/plain'});
+        res.end('1');
+    } else {
+        res.writeHead(200, {'Content-Type' : 'text/plain'});
+        res.end('0');
+    }
+    lights = false;
+});
+
+app.get('/lights/node', function(req, res) {
+    lights = true;
+    res.send(''); // rover detects a node and wants to find it's coordinates
 });
 
 app.listen(PORT, IP, function(err){

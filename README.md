@@ -39,6 +39,7 @@
 - [x]  Check if the last bullet point about response of update function has been implemented.
 - [x]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [x]  Add margin for error for node (width of the rover).
+- [ ]  Finish endpoints for the lights (lights and ping).
 - [ ]  Test margin for error with static value.
 - [ ]  Use Sam's triangulation method.
 - [ ]  Send output of data structure to database.
