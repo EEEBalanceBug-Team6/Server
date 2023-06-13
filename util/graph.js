@@ -50,7 +50,7 @@ class Graph {
 
         while(pointer !== this.vertices[0].toString()){
             returnList.push(this.shortestTree[pointer].previous);
-            pointer = this.shortestTree[pointer].previous
+            pointer = this.shortestTree[pointer].previous;
         }
 
         return returnList.reverse();
