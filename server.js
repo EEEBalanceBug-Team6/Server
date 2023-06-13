@@ -64,11 +64,13 @@ function addVertice(id, x, y, options){
 }
 
 function verticeReturn(ID){
+    var returnval = {};
     alldata.vertices.forEach(vertice => {
         if(vertice.id === ID){
-            return vertice;
+            returnval =  vertice; // remember that return would return from the scope of the foreach function
         }
     });
+    return returnval;
 }
 
 function addEdge(vertices, weight){ // note that you are assuming that the input is a string here
