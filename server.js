@@ -229,8 +229,14 @@ app.get('/data/node', function(req, res){
 
     var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
-    var x = coordinates[1];  
-    var y = coordinates[2];
+    var x = parseInt(body.x);  
+    var y = parseInt(body.y);
+    if(coordinates[1] !== -1){
+        x = coordinates[1];
+    }
+    if(coordinates[2] !== -1){
+        y = coordinates[2];
+    }
     var weight = Math.floor(Math.sqrt(Math.pow((x - prevx), 2) + Math.pow((y - prevy), 2)));
     checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 
