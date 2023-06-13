@@ -23,7 +23,7 @@ var prevx = 0; // used to calculate the weight from the last node basically, rea
 var prevy = 0; 
 var parentDirection;
 var childDirection;
-var margin = 0; // based on the diameter of the rover: depends on live testing it
+var margin = 5; // based on the diameter of the rover: depends on live testing it
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -111,8 +111,10 @@ function lookUpOption(ID, backup){
 function lookUpCoordinates(x, y){
     var returnval = [-1, -1, -1]; // ID, x, y
     alldata.vertices.forEach(vertice => {
-        if(vertice.x === x && vertice.y === y){
+        if((vertice.x - margin <= x && vertice.x + margin >= x) && (vertice.y - margin <= y && vertice.y + margin >= y)){
             returnval[0] = vertice.id;
+            returnval[1] = vertice.x;
+            returnval[2] = vertice.y;
         }
     });
     return returnval;
@@ -225,10 +227,10 @@ app.get('/data/update', function(req, res) {
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
 
-    var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y));
+    var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
-    var x = parseInt(body.x); // change this based on triangulation and the marging for error found
-    var y = parseInt(body.y);
+    var x = coordinates[1];  
+    var y = coordinates[2];
     var weight = Math.floor(Math.sqrt(Math.pow((x - prevx), 2) + Math.pow((y - prevy), 2)));
     checkOption(parentDirection, previousNode); // assigns direction from where you have left the previous node, so basically it assigns a direction to the previous node
 

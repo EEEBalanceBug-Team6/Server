@@ -38,13 +38,12 @@
 - [x]  TEST WEIGHT, I made changes to the checkoptions part, along with the let options and the new data addition part. Also added distance formula implementation for weight.
 - [x]  Check if the last bullet point about response of update function has been implemented.
 - [x]  Check that newdata is updated even when you encounter a node that you have been to before. 
-- [ ]  Add margin for error for node (width of the rover).
+- [x]  Add margin for error for node (width of the rover).
+- [ ]  Test margin for error with static value.
 - [ ]  Use Sam's triangulation method.
 - [ ]  Send output of data structure to database.
 
 ## Notes on Tasks
 
 - As part of the response of the update method, the rover receives "options" for the node it is currently at. The decision needs to be stored in "childDirection" and sent as part of the next update post request. Since you are doing based on bearings, it should be in terms of degrees.
-- Another thing to note as Sam said: Weights are not needed to be sent as part of the request and can be deduced from the 
-previous node (offset of the x or y coordinate). The decision to take a turn should be sent as part of the response to turn 
-maybe? Depends on the last option not yet considered.
+- Remember that the margin would be half of the "wingspan" of the rover because you want it to be like +- r.
