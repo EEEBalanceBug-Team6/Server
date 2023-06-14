@@ -354,11 +354,9 @@ app.get('/data/clear', function(req, res){
 
 app.get('/lights/ping', function(req, res) {
     if(lights){
-        res.writeHead(200, {'Content-Type' : 'text/plain'});
-        res.end('1');
+        res.send('1');
     } else {
-        res.writeHead(200, {'Content-Type' : 'text/plain'});
-        res.end('0');
+        res.send('0'); // used by the ESP32s to check the status of the rover at this point.
     }
     lights = false;
 });
