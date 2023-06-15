@@ -211,11 +211,8 @@ app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.query; // changed from req.body to req.query
     var options = {}; // initializer json for options
-    var x = parseInt(body.x); // change this based on triangulation
-    var y = parseInt(body.y);
-
-    // var x = start[0]; // uncomment this when adding triangulation stuff
-    // var y = start[1]; // uncomment this when adding triangulation stuff
+    var x = start[0]; // uncomment this when adding triangulation stuff
+    var y = start[1]; // uncomment this when adding triangulation stuff
 
     if(typeof req.query.options === 'string'){
         options[req.query.options] = false;
