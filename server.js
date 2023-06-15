@@ -25,20 +25,33 @@ var parentDirection;
 var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
 var lights = false;
+var start = [0, 0];
+var end = [0, 0];
+var beacon1 = [0, 0];
+var beacon2 = [0, 0];
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
     "vertices" : [], 
     "edges" : [], // this can actually be used alone to create the graph for Dijkstra's algorithm
-    "shortest" : [] // need to write a function that uses dijkstra's to find the shortest path
+    "shortest" : [], // need to write a function that uses dijkstra's to find the shortest path
+    "shortestToEnd" : []
 };
 
 var newdata = { // data structure to be sent, empty everytime a client dump is made
     "locations" : [], 
     "vertices" : [], 
     "edges" : [],
-    "shortest" : [] // need to write a function that uses dijkstra's to find the shortest path
+    "shortest" : [], // need to write a function that uses dijkstra's to find the shortest path
+    "shortestToEnd" : []
 };
+
+var mazeEnds = {
+    '1' : [0, 0],
+    '2' : [0, 3.42],
+    '3' : [2.3, 3.42],
+    '4' : [2.3, 0]
+}
 
 // the three functions below are helper functions for pushing data to both data structures, datadump method needs to reset the newdata to empty object
 
@@ -179,12 +192,30 @@ app.get('/client/datadump', function(req, res){
     // WORKS
 }); 
 
+app.get('/client/calibrate', function(req, res){
+    start = mazeEnds[req.body.start];
+    end = mazeEnds[req.body.end];
+    beacon1 = mazeEnds[req.body.B1];
+    beacon2 = mazeEnds[req.body.B2];
+
+    var response = {
+        'status' : 'success',
+        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
+    };
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(response));
+});
+
 app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
     var body = req.query; // changed from req.body to req.query
     var options = {}; // initializer json for options
     var x = parseInt(body.x); // change this based on triangulation
     var y = parseInt(body.y);
+
+    // var x = start[0]; // uncomment this when adding triangulation stuff
+    // var y = start[1]; // uncomment this when adding triangulation stuff
 
     if(typeof req.query.options === 'string'){
         options[req.query.options] = false;
@@ -317,7 +348,11 @@ app.get('/data/node', function(req, res){
     console.log(graph);
     console.log(graph.reconstruct(previousNode.toString()));
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
-    shortestList(previousNode);
+    if(!endReached()){ 
+        shortestList(previousNode); 
+    } else {
+        shortestList(lookUpCoordinates(end[0], end[1])[0]);
+    }
 
     // once receiving the response, remember to store the option you pick in a variable and send it as part of the next request.
 

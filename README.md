@@ -40,6 +40,7 @@
 - [x]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [x]  Add margin for error for node (width of the rover).
 - [ ]  Finish endpoints for the lights (lights and ping).
+- [ ]  Endpoint for assigning the end point of the maze.
 - [ ]  Test margin for error with static value.
 - [ ]  Use Sam's triangulation method.
 - [ ]  Send output of data structure to database.
@@ -48,3 +49,4 @@
 
 - As part of the response of the update method, the rover receives "options" for the node it is currently at. The decision needs to be stored in "childDirection" and sent as part of the next update post request. Since you are doing based on bearings, it should be in terms of degrees.
 - Remember that the margin would be half of the "wingspan" of the rover because you want it to be like +- r.
+- We know the end of the maze (furthest x or y coordinate - enter that in the frontend UI).
