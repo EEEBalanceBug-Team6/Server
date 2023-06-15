@@ -40,7 +40,8 @@
 - [x]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [x]  Add margin for error for node (width of the rover).
 - [ ]  Finish endpoints for the lights (lights and ping).
-- [ ]  Endpoint for assigning the end point of the maze.
+- [ ]  Test lights endpoints
+- [ ]  Test calibration endpoint.
 - [ ]  Test margin for error with static value.
 - [ ]  Use Sam's triangulation method.
 - [ ]  Send output of data structure to database.
