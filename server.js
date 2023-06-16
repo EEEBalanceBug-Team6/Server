@@ -78,6 +78,14 @@ function addVertice(id, x, y, options){
     graph.addVertex(id);
 }
 
+function prettyPrint(node){
+    console.log("--------------------------------------------------------------------------------------------------------------------------------");
+    console.log("Current Vertex: " + node);
+    console.log(graph);
+    console.log(graph.reconstruct(node.toString()));
+    console.log("--------------------------------------------------------------------------------------------------------------------------------");
+}
+
 function verticeReturn(ID){
     var returnval = {};
     alldata.vertices.forEach(vertice => {
@@ -238,15 +246,8 @@ app.get('/data/start', function(req, res){
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
-    console.log("Parent Direction:" + parentDirection);
-    console.log("Child Direction:" + childDirection);
-
     graph.Dijkstra();
-    console.log("--------------------------------------------------------------------------------------------------------------------------------");
-    console.log("Current Vertex: " + previousNode);
-    console.log(graph);
-    console.log(graph.reconstruct(previousNode.toString()));
-    console.log("--------------------------------------------------------------------------------------------------------------------------------");
+    //prettyPrint(previousNode);
     shortestList(previousNode);
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
@@ -332,15 +333,11 @@ app.get('/data/node', function(req, res){
     childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
-    console.log("--------------------------------------------------------------------------------------------------------------------------------");
-    console.log("Current Vertex: " + previousNode);
-    console.log(graph);
-    console.log(graph.reconstruct(previousNode.toString()));
-    console.log("--------------------------------------------------------------------------------------------------------------------------------");
-    if(!endReached()){ 
-        shortestList(previousNode); 
-    } else {
-        shortestList(lookUpCoordinates(end[0], end[1])[0]);
+    // prettyPrint(previousNode);
+    shortestList(previousNode); 
+
+    if(endReached()){
+        console.log("We have reached the end of the maze.");
     }
 
     // once receiving the response, remember to store the option you pick in a variable and send it as part of the next request.
