@@ -145,10 +145,8 @@ function endReached(){
     var reached = true;
     alldata.vertices.forEach(vertice => {
         optionList = Object.keys(vertice.options);
-        console.log(optionList);
         for(option of optionList){
             if(!vertice.options[option]){
-                console.log("The culprit is: " + option);
                 reached = false;
             }
         }
@@ -171,7 +169,6 @@ app.get('/client', function(req, res){
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(stringResponse); 
-    console.log(stringResponse);
     // WORKS
 });
 
@@ -260,8 +257,6 @@ app.get('/data/update', function(req, res) {
     var date = new Date();
     var isodate = date.toISOString();
 
-    console.log(req.query);
-
     addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -320,7 +315,6 @@ app.get('/data/node', function(req, res){
         response = "-1";
     } else {
         let option = Object.keys(options.options);
-        //console.log(option);
         for(let optionKey of option){
             if(!options.options[optionKey]){ // remember that this is nested in another object
                 response = optionKey;
@@ -336,8 +330,6 @@ app.get('/data/node', function(req, res){
     prevy = y;
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
-
-    console.log("Reached the end?: " + endReached());
 
     graph.Dijkstra();
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
