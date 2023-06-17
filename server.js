@@ -82,7 +82,7 @@ function prettyPrint(node){
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
     console.log("Current Vertex: " + node);
     console.log(graph);
-    console.log(graph.reconstruct(node.toString()));
+    console.log(graph.reconstruct(node.toString(), '0'));
     console.log("--------------------------------------------------------------------------------------------------------------------------------");
 }
 
@@ -144,7 +144,7 @@ function lookUpCoordinates(x, y){
 }
 
 function shortestList(ID){
-    let stringList = graph.reconstruct(ID.toString());
+    let stringList = graph.reconstruct(ID.toString(), '0');
     let intList = stringList.map(Number);
     alldata["shortest"] = intList;
     newdata["shortest"] = intList;
