@@ -44,11 +44,39 @@ class Graph {
         }
     }
 
-    reconstruct(end){
+    Backtrack(startnode){
+        for(const vertex of this.vertices){
+            if(vertex !== startnode){
+                this.shortestTree[vertex] = {"distance" : Infinity, "previous" : startnode.toString()};
+            } else {
+                this.shortestTree[vertex] = {"distance" : 0, "previous" : startnode.toString()};
+            }
+        }
+
+        for(const child in this.graph['E']){
+            if(this.graph['E'][child] + this.shortestTree['E'].distance <= this.shortestTree[child].distance){
+                this.shortestTree[child].distance = this.graph['E'][child] + this.shortestTree['E'].distance;
+                this.shortestTree[child].previous = 'E';
+            }
+        }
+
+        for(const parent in this.graph){
+            if(parent !== 'E'){
+                for(const child in this.graph[parent]){
+                    if(this.graph[parent][child] + this.shortestTree[parent].distance <= this.shortestTree[child].distance){
+                        this.shortestTree[child].distance = this.graph[parent][child] + this.shortestTree[parent].distance;
+                        this.shortestTree[child].previous = parent;
+                    }
+                }
+            }
+        }
+    }
+
+    reconstruct(end, start){
         var returnList = [end];
         var pointer = end;
 
-        while(pointer !== this.vertices[0].toString()){
+        while(pointer !== start.toString()){
             returnList.push(this.shortestTree[pointer].previous);
             pointer = this.shortestTree[pointer].previous;
         }
@@ -66,16 +94,23 @@ graph.addVertex('D');
 graph.addVertex('E');
 
 graph.addEdge(['A', 'B'], 4); // this format is useful in the server file
+graph.addEdge(['B', 'A'], 4);
 graph.addEdge(['A', 'C'], 2);
+graph.addEdge(['C', 'A'], 2);
 graph.addEdge(['B', 'C'], 1);
+graph.addEdge(['C', 'B'], 1);
 graph.addEdge(['B', 'D'], 1);
+graph.addEdge(['D', 'B'], 1);
 graph.addEdge(['C', 'D'], 8);
+graph.addEdge(['D', 'C'], 8);
 graph.addEdge(['C', 'E'], 10);
+graph.addEdge(['E', 'C'], 10);
 
+graph.Backtrack('E');
+console.log(graph);
 // graph.Dijkstra();
-
 // console.log(graph);
-// console.log(graph.reconstruct('E'));
+//console.log(graph.reconstruct('C', 'E'));
 
 module.exports = Graph;
 

@@ -96,10 +96,11 @@ function verticeReturn(ID){
     return returnval;
 }
 
-function addEdge(vertices, weight){ // note that you are assuming that the input is a string here
+function addEdge(vertices, weight, angle){ // note that you are assuming that the input is a string here
     var json = {
         'vertices' : vertices, // list of vertices connected to the edge - assume first element is the origin node
-        'weight' : weight // cost of traversing the edge.
+        'weight' : weight, // cost of traversing the edge.
+        'option' : angle // option you came to this node from
     };
     alldata.edges.push(json);
     newdata.edges.push(json);
@@ -160,6 +161,19 @@ function endReached(){
         }
     });
     return reached;
+}
+
+function unexploredNode(){
+    var ID = -1;
+    alldata.vertices.forEach(vertice => {
+        optionList = Object.keys(vertice.options);
+        for(option of optionList){
+            if(!vertice.options[option]){
+                ID = vertice.id;
+            }
+        }
+    });
+    return ID;
 }
 
 // add a function here that finds the shortest path between any two given vertices.
@@ -247,7 +261,7 @@ app.get('/data/start', function(req, res){
     childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
-    //prettyPrint(previousNode);
+    prettyPrint(previousNode);
     shortestList(previousNode);
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
@@ -295,14 +309,14 @@ app.get('/data/node', function(req, res){
         addVertice(maxUpTillNow, x, y, options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-        addEdge([previousNode, maxUpTillNow], weight);
-        addEdge([maxUpTillNow, previousNode], weight);
+        addEdge([previousNode, maxUpTillNow], weight, childDirection);
+        addEdge([maxUpTillNow, previousNode], weight, parentDirection);
 
         previousNode = maxUpTillNow;
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
-        addEdge([previousNode, ID], weight);
-        addEdge([ID, previousNode], weight);
+        addEdge([previousNode, ID], weight, childDirection);
+        addEdge([ID, previousNode], weight, parentDirection);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
         newdata.vertices.push(verticeReturn(ID)); // you want to push to new data after you have made sure it is up to date completely.
@@ -333,7 +347,7 @@ app.get('/data/node', function(req, res){
     childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
-    // prettyPrint(previousNode);
+    prettyPrint(previousNode);
     shortestList(previousNode); 
 
     if(endReached()){
@@ -386,7 +400,12 @@ app.get('/lights/ping', function(req, res) {
 });
 
 app.get('/lights/node', function(req, res) {
-    lights = true;
+    var body = req.query;
+    if(body.incomplete === '1'){
+        lights = true;
+    } else {
+        lights = false;
+    }
     res.send(''); // rover detects a node and wants to find it's coordinates
 });
 
