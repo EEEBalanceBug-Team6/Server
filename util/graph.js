@@ -91,7 +91,6 @@ class Graph {
             return 0;
         }
         var optionsList = this.reconstruct(unexploredNode, currentNode);
-        console.log(optionsList[1]);
         if(optionsList.length >1){
             if(this.graph[optionsList[0]].hasOwnProperty(optionsList[1])){
                 return this.graph[optionsList[0]][optionsList[1]][1];

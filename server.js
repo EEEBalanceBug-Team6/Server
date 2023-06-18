@@ -27,7 +27,7 @@ var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
 var lights = false;
 var start = [0, 0];
-var end = [60, 90]; // for testing purposes
+var end = [30, 60]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
 var beacon2 = [0, 0];
 
@@ -361,9 +361,10 @@ app.get('/data/node', function(req, res){
 
     if(endReached()){
         console.log("We have reached the end of the maze.");
-        var datalist = lookUpCoordinates(end[0], end[1])[0]
-        alldata.shortestToEnd = datalist;
-        newdata.shortestToEnd = datalist;
+        var endID = lookUpCoordinates(end[0], end[1])[0].toString();
+        console.log('The shortest path through the maze is: ' + graph.reconstruct(endID, '0'));
+        alldata.shortestToEnd = graph.reconstruct(endID, '0');
+        newdata.shortestToEnd = graph.reconstruct(endID, '0');
     }
 
     // once receiving the response, remember to store the option you pick in a variable and send it as part of the next request.
