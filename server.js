@@ -30,6 +30,8 @@ var start = [0, 0];
 var end = [20, 0]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
 var beacon2 = [0, 0];
+var bpos1;
+var bpos2;
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -220,6 +222,8 @@ app.get('/client/calibrate', function(req, res){
     end = mazeEnds[req.body.end];
     beacon1 = mazeEnds[req.body.B1];
     beacon2 = mazeEnds[req.body.B2];
+    bpos1 = new mt.Vector(beacon1[0], beacon1[1]);
+    bpos2 = new mt.Vector(beacon2[0], beacon2[1]);
 
     var response = {
         'status' : 'success',
@@ -284,6 +288,9 @@ app.get('/data/update', function(req, res) {
 
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
+
+    var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
+    console.log('x: ' + pos.x + ', y: ' + pos.y); // set body.x and body.y to be pos.x and pos.y
 
     var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
