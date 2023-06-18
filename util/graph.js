@@ -77,6 +77,7 @@ class Graph {
         var pointer = end;
 
         while(pointer !== start.toString()){
+            
             returnList.push(this.shortestTree[pointer].previous);
             pointer = this.shortestTree[pointer].previous;
         }
@@ -86,9 +87,17 @@ class Graph {
 
     nextoption(unexploredNode, currentNode){
         this.Backtrack(currentNode);
+        if(unexploredNode === -1){
+            return 0;
+        }
         var optionsList = this.reconstruct(unexploredNode, currentNode);
-        //console.log(optionsList[1]);
-        console.log(this.graph[optionsList[0]][optionsList[1]][1]);
+        console.log(optionsList[1]);
+        if(optionsList.length >1){
+            if(this.graph[optionsList[0]].hasOwnProperty(optionsList[1])){
+                return this.graph[optionsList[0]][optionsList[1]][1];
+            }
+        }
+        return 0; 
     }
 };
 
@@ -113,7 +122,8 @@ graph.addEdge(['D', 'C'], 8, 280);
 graph.addEdge(['C', 'E'], 10, 300);
 graph.addEdge(['E', 'C'], 10, 320);
 
-graph.nextoption('C', 'E');
+//console.log(graph.nextoption('A', 'A'));
+//graph.Backtrack('A');
 //console.log(graph);
 // graph.Dijkstra();
 // console.log(graph);

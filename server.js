@@ -104,7 +104,7 @@ function addEdge(vertices, weight, angle){ // note that you are assuming that th
     };
     alldata.edges.push(json);
     newdata.edges.push(json);
-    graph.addEdge(vertices, weight);
+    graph.addEdge(vertices, weight, parseInt(angle));
 } 
 
 function checkOption(direction, ID){
@@ -165,12 +165,15 @@ function endReached(){
 
 function unexploredNode(){
     var ID = -1;
+    var found = false;
     alldata.vertices.forEach(vertice => {
         optionList = Object.keys(vertice.options);
         for(option of optionList){
-            if(!vertice.options[option]){
+            if(!vertice.options[option] && !found){
                 ID = vertice.id;
+                found = true;
             }
+        
         }
     });
     return ID;
@@ -309,14 +312,14 @@ app.get('/data/node', function(req, res){
         addVertice(maxUpTillNow, x, y, options); // are we storing previousNode + 1 or previousNode?
         // need to add logic for converting this to an edge between two nodes.
         // remember that you need to use previousNode to find an edge and add this edge if it doesn't already exist
-        addEdge([previousNode, maxUpTillNow], weight, childDirection);
-        addEdge([maxUpTillNow, previousNode], weight, parentDirection);
+        addEdge([previousNode, maxUpTillNow], weight, parentDirection);
+        addEdge([maxUpTillNow, previousNode], weight, childDirection);
 
         previousNode = maxUpTillNow;
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
-        addEdge([previousNode, ID], weight, childDirection);
-        addEdge([ID, previousNode], weight, parentDirection);
+        addEdge([previousNode, ID], weight, parentDirection);
+        addEdge([ID, previousNode], weight, childDirection);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
         newdata.vertices.push(verticeReturn(ID)); // you want to push to new data after you have made sure it is up to date completely.
@@ -324,7 +327,12 @@ app.get('/data/node', function(req, res){
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
     var options = lookUpOption(previousNode, childDirection);
-    var response = options.backup;
+    var response = graph.nextoption(unexploredNode(), previousNode).toString();
+
+    // console.log("Unexplored: " + unexploredNode());
+    // console.log("Previous node: " + previousNode);
+
+    //console.log(graph.nextoption(unexploredNode(), previousNode));
 
     if(endReached()){
         response = "-1";
