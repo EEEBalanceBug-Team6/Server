@@ -1,4 +1,5 @@
 const Graph = require('./util/graph.js');
+const mt = require('./util/triangulation.js');
 const db = require('./util/db.js');
 const Queries = require('./util/queries.js');
 const cors = require('cors');
