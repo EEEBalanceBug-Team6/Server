@@ -413,7 +413,6 @@ app.get('/lights/ping', function(req, res) {
     } else {
         res.send('0'); // used by the ESP32s to check the status of the rover at this point.
     }
-    lights = false;
 });
 
 app.get('/lights/node', function(req, res) {
