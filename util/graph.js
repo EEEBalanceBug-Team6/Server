@@ -77,7 +77,7 @@ class Graph {
         var pointer = end;
 
         while(pointer !== start.toString()){
-            
+            //console.log(this.shortestTree);
             returnList.push(this.shortestTree[pointer].previous);
             pointer = this.shortestTree[pointer].previous;
         }
