@@ -7,6 +7,10 @@ class Queries{
         return;
     }
 
+    updateVertice(option){
+
+    }
+
     insertEdge(edge){ // can cover just the edges table
         return;
     }
