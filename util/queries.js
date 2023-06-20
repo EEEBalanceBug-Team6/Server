@@ -3,15 +3,19 @@ class Queries{
         return "INSERT INTO locations (timestamp, x, y, direction) VALUES (" + location.timestamp + ", " + location.x + ", " + location.y + ", " + location.direction + ");";
     }
 
-    insertVertice(vertice){ // should cover adding to options table as well as vertices table
-        return;
+    insertVertice(ID, x, y){ // should cover adding to options table as well as vertices table
+        return "INSERT INTO vertices (vid, x, y) VALUES (" + ID + ", " + x + ", " + y + ");";
     }
 
-    updateVertice(option){
+    insertEdge(pid, cid, weight){ // can cover just the edges table
+        return "INSERT INTO edges (pid, cid, weight) VALUES (" + pid + ", " + cid + ", " + weight + ");";
+    }
+
+    insertOptions(){
 
     }
 
-    insertEdge(edge){ // can cover just the edges table
+    updateOptions(option){
         return;
     }
 };
