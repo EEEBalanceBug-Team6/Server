@@ -146,26 +146,29 @@ function lookUpCoordinates(x, y){
     return returnval;
 }
 
-function updateOptions(ID, optionsList){
+function updateOptions(ID, optionsList) {
+    console.log(optionsList);
     alldata.vertices.forEach(vertice => {
-        if(vertice.id === ID){
-            for(const option in optionsList){
-                if(!vertice.hasOwnProperty(option)){
-                    vertice.options[option] = false;
-                }
-            }
+      if (vertice.id === ID) {
+        for (let option of optionsList) {
+          if (!vertice.options.hasOwnProperty(option)) {
+            vertice.options[option] = false;
+            console.log(option);
+          }
         }
+      }
     });
+    console.log(alldata.vertices);
     newdata.vertices.forEach(vertice => {
-        if(vertice.id === ID){
-            for(const option in optionsList){
-                if(!vertice.hasOwnProperty(option)){
-                    vertice.options[option] = false;
-                }
-            }
+      if (vertice.id === ID) {
+        for (const option of optionsList) { // <-- Changed 'in' to 'of' here
+          if (!vertice.options.hasOwnProperty(option)) {
+            vertice.options[option] = false;
+          }
         }
+      }
     });
-}
+  }
 
 function shortestList(ID){
     let stringList = graph.reconstruct(ID.toString(), '0');
@@ -310,13 +313,16 @@ app.get('/data/update', function(req, res) {
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
     //console.log('bpos1 :' + bpos1 + ', bpos2 :' + bpos2 + ', bber1 :' + body.bber1 + ', bber2 :' + body.bber2);
-    var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
+    //var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
     //console.log('x: ' + pos.x + ', y: ' + pos.y); // set body.x and body.y to be pos.x and pos.y
 
-    var coordinates = lookUpCoordinates(pos.x, pos.y); // lookUpCoordinates(parseInt(body.x), parseInt(body.y));
+    //var coordinates = lookUpCoordinates(pos.x, pos.y); 
+    var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y));
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
-    var x = pos.x; // parseInt(body.x); 
-    var y = pos.y; // parseInt(body.y);
+    // var x = pos.x;  
+    // var y = pos.y; 
+    var x =  parseInt(body.x); 
+    var y =  parseInt(body.y); 
     if(coordinates[1] !== -1){
         x = coordinates[1];
     }
@@ -347,7 +353,7 @@ app.get('/data/node', function(req, res){
         previousNode = maxUpTillNow;
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
-        updateOptions(ID, lookUpOption(ID, "").options);
+        updateOptions(ID, body.options);
         addEdge([previousNode, ID], weight, parentDirection);
         addEdge([ID, previousNode], weight, childDirection);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
