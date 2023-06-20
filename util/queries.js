@@ -12,7 +12,7 @@ class Queries{
     }
 
     insertOptions(){
-
+        return;
     }
 
     updateOptions(option){
