@@ -146,6 +146,27 @@ function lookUpCoordinates(x, y){
     return returnval;
 }
 
+function updateOptions(ID, optionsList){
+    alldata.vertices.forEach(vertice => {
+        if(vertice.id === ID){
+            for(const option in optionsList){
+                if(!vertice.hasOwnProperty(option)){
+                    vertice.options[option] = false;
+                }
+            }
+        }
+    });
+    newdata.vertices.forEach(vertice => {
+        if(vertice.id === ID){
+            for(const option in optionsList){
+                if(!vertice.hasOwnProperty(option)){
+                    vertice.options[option] = false;
+                }
+            }
+        }
+    });
+}
+
 function shortestList(ID){
     let stringList = graph.reconstruct(ID.toString(), '0');
     let intList = stringList.map(Number);
@@ -326,6 +347,7 @@ app.get('/data/node', function(req, res){
         previousNode = maxUpTillNow;
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
+        updateOptions(ID, lookUpOption(ID, "").options);
         addEdge([previousNode, ID], weight, parentDirection);
         addEdge([ID, previousNode], weight, childDirection);
         previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
