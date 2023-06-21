@@ -220,7 +220,7 @@ app.get('/', function(req, res){
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()}`
+        'message' : `GET @ ${londonTime.getHours() + ':' + londonTime.getMinutes() + ':' + londonTime.getSeconds()}`
     };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -233,7 +233,7 @@ app.get('/client/datadump', function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
-        "data" : alldata
+        "data" : newdata
     };
     res.end(JSON.stringify(data));
     newdata = {
@@ -255,7 +255,7 @@ app.get('/client/calibrate', function(req, res){
 
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()}`
+        'message' : `GET @ ${londonTime.getHours() + ':' + londonTime.getMinutes() + ':' + londonTime.getSeconds()}`
     };
 
     res.writeHead(200, {'Content-Type': 'application/json'});
