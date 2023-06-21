@@ -220,7 +220,7 @@ app.get('/', function(req, res){
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
+        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()}`
     };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -255,7 +255,7 @@ app.get('/client/calibrate', function(req, res){
 
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
+        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()}`
     };
 
     res.writeHead(200, {'Content-Type': 'application/json'});
