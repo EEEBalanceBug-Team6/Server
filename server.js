@@ -297,8 +297,8 @@ app.get('/data/start', function(req, res){
     childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
-    prettyPrint(previousNode);
-    shortestList(previousNode);
+    //prettyPrint(previousNode);
+    //shortestList(previousNode);
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
@@ -307,8 +307,11 @@ app.get('/data/update', function(req, res) {
     var body = req.query;
     var date = new Date();
     var isodate = date.toISOString();
+    var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
 
-    addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
+    //addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
+
+    addLocation(isodate, pos.x, pos.y, parseInt(body.direction)); 
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('');
@@ -317,16 +320,16 @@ app.get('/data/update', function(req, res) {
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
     //console.log('bpos1 :' + bpos1 + ', bpos2 :' + bpos2 + ', bber1 :' + body.bber1 + ', bber2 :' + body.bber2);
-    //var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
+    var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
     //console.log('x: ' + pos.x + ', y: ' + pos.y); // set body.x and body.y to be pos.x and pos.y
 
-    //var coordinates = lookUpCoordinates(pos.x, pos.y); 
-    var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y));
+    var coordinates = lookUpCoordinates(pos.x, pos.y); 
+    //var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y));
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
-    // var x = pos.x;  
-    // var y = pos.y; 
-    var x =  parseInt(body.x); 
-    var y =  parseInt(body.y); 
+    var x = pos.x;  
+    var y = pos.y; 
+    //var x =  parseInt(body.x); 
+    //var y =  parseInt(body.y); 
     if(coordinates[1] !== -1){
         x = coordinates[1];
     }
@@ -402,12 +405,9 @@ app.get('/data/node', function(req, res){
 
     if(pussycount === 2){
         pussydirection = childDirection;
-        console.log('pussy count: ', pussycount);
-        console.log('pussy direction: ' + pussydirection);
     }
 
     if(pussycount > 0){
-        console.log('you are a pussy');
         response = pussydirection;
         pussycount = pussycount - 1;
     }

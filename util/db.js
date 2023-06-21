@@ -4,3 +4,5 @@ const hiddenkey = {
     password : "qwerty123",
     database : "Y2DB"
 };
+
+module.exports = hiddenkey;

@@ -11,16 +11,11 @@ class Graph {
         }
     }
 
-    addEdge(edgelist, weight, option){ // loops in the graph are okay, Dijkstra's should be able to deal with it
+    addEdge(edgelist, weight, option){
         if(this.graph.hasOwnProperty(edgelist[0])){
-            // the parent node already exists and doesnt have to be created
-            // edgelist is the value to "vertices" in the edges part of the response to datadump
-            // weight is the value for the weight key
             this.graph[edgelist[0]][edgelist[1]] = [weight, option];
         } else {
-            // the parent node doesnt exist and needs to be assigned
             this.graph[edgelist[0]] = {  };
-
             this.graph[edgelist[0]][edgelist[1]] = [weight, option];
         }
     }
@@ -77,7 +72,6 @@ class Graph {
         var pointer = end;
 
         while(pointer !== start.toString()){
-            //console.log(this.shortestTree);
             returnList.push(this.shortestTree[pointer].previous);
             pointer = this.shortestTree[pointer].previous;
         }
@@ -102,13 +96,13 @@ class Graph {
 
 var graph = new Graph(); 
 
-graph.addVertex('A'); // this format is useful in the server file
+graph.addVertex('A'); 
 graph.addVertex('B');
 graph.addVertex('C');
 graph.addVertex('D');
 graph.addVertex('E');
 
-graph.addEdge(['A', 'B'], 4, 90); // this format is useful in the server file
+graph.addEdge(['A', 'B'], 4, 90); 
 graph.addEdge(['B', 'A'], 4, 180);
 graph.addEdge(['A', 'C'], 2, 200);
 graph.addEdge(['C', 'A'], 2, 220);
