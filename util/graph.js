@@ -36,7 +36,7 @@ class Graph {
 
         for(const parent in this.graph){
             for(const child in this.graph[parent]){
-                if(this.graph[parent][child][0] + this.shortestTree[parent].distance <= this.shortestTree[child].distance){
+                if(this.graph[parent][child][0] + this.shortestTree[parent].distance < this.shortestTree[child].distance){
                     this.shortestTree[child].distance = this.graph[parent][child][0] + this.shortestTree[parent].distance;
                     this.shortestTree[child].previous = parent;
                 }
@@ -54,7 +54,7 @@ class Graph {
         }
 
         for(const child in this.graph['E']){
-            if(this.graph['E'][child][0] + this.shortestTree['E'].distance <= this.shortestTree[child].distance){
+            if(this.graph['E'][child][0] + this.shortestTree['E'].distance < this.shortestTree[child].distance){
                 this.shortestTree[child].distance = this.graph['E'][child][0] + this.shortestTree['E'].distance;
                 this.shortestTree[child].previous = 'E';
             }
@@ -63,7 +63,7 @@ class Graph {
         for(const parent in this.graph){
             if(parent !== 'E'){
                 for(const child in this.graph[parent]){
-                    if(this.graph[parent][child][0] + this.shortestTree[parent].distance <= this.shortestTree[child].distance){
+                    if(this.graph[parent][child][0] + this.shortestTree[parent].distance < this.shortestTree[child].distance){
                         this.shortestTree[child].distance = this.graph[parent][child][0] + this.shortestTree[parent].distance;
                         this.shortestTree[child].previous = parent;
                     }

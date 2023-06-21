@@ -17,6 +17,9 @@ const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/Lo
 app.use(bodyParser.json());
 app.use(cors());
 
+var pussycount = 0;
+var pussydirection;
+
 var graph = new Graph(); // this is the graph imported from the graph file
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 var maxUpTillNow = 0; // niche case, try to run the entire rover path test and you'll see why this is needed
@@ -27,7 +30,7 @@ var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
 var lights = false;
 var start = [0, 0];
-var end = [20, 0]; // for testing purposes - change this when you change the test cases
+var end = [4, 2]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
 var beacon2 = [0, 0];
 var bpos1 = new mt.Vector(beacon1[0], beacon1[1]);
@@ -147,18 +150,19 @@ function lookUpCoordinates(x, y){
 }
 
 function updateOptions(ID, optionsList) {
-    console.log(optionsList);
+    //console.log(optionsList);
+    if(!Array.isArray(optionsList)){
+        optionsList = [optionsList];
+    }
     alldata.vertices.forEach(vertice => {
       if (vertice.id === ID) {
         for (let option of optionsList) {
           if (!vertice.options.hasOwnProperty(option)) {
             vertice.options[option] = false;
-            console.log(option);
           }
         }
       }
     });
-    console.log(alldata.vertices);
     newdata.vertices.forEach(vertice => {
       if (vertice.id === ID) {
         for (const option of optionsList) { // <-- Changed 'in' to 'of' here
@@ -353,12 +357,26 @@ app.get('/data/node', function(req, res){
         previousNode = maxUpTillNow;
         checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
     } else {
-        updateOptions(ID, body.options);
-        addEdge([previousNode, ID], weight, parentDirection);
-        addEdge([ID, previousNode], weight, childDirection);
-        previousNode = ID; // you dont have to implement the start logic here because you cant visit the start node multiple times right?
-        checkOption(childDirection, previousNode); // assigns direction from where you have approached this node, so basically it assigns a direction to this node
-        newdata.vertices.push(verticeReturn(ID)); // you want to push to new data after you have made sure it is up to date completely.
+        if(previousNode !== ID){
+            updateOptions(ID, body.options);
+            addEdge([previousNode, ID], weight, parentDirection);
+            addEdge([ID, previousNode], weight, childDirection);
+            previousNode = ID;
+            newdata.vertices.push(verticeReturn(ID));
+        } else {
+            if(pussycount === 0){
+                pussycount = 2;
+            }
+            alldata.vertices.forEach(vertice => {
+                if(vertice.id === ID){
+                    var optionList = Object.keys(vertice.options);
+                    for(option of optionList){
+                        vertice.options[option] = true;
+                    }
+                }
+            });
+        }
+        checkOption(childDirection, previousNode);
     } 
     // the response should query the options for the currentNode (which has been assigned as the previousNode) and pick one option which is then sent to the rover. The rover stores this, makes the turn and then sends this as part of the request (parentDirection) when is reaches the next node.
 
@@ -382,6 +400,18 @@ app.get('/data/node', function(req, res){
         }
     }
 
+    if(pussycount === 2){
+        pussydirection = childDirection;
+        console.log('pussy count: ', pussycount);
+        console.log('pussy direction: ' + pussydirection);
+    }
+
+    if(pussycount > 0){
+        console.log('you are a pussy');
+        response = pussydirection;
+        pussycount = pussycount - 1;
+    }
+
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(response); // sends as a response a json containing the options explored, helps pick the next option to be taken.
 
@@ -391,8 +421,9 @@ app.get('/data/node', function(req, res){
     childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
-    prettyPrint(previousNode);
-    shortestList(previousNode); 
+    console.log(alldata.vertices);
+    //prettyPrint(previousNode);
+    //shortestList(previousNode); 
 
     if(endReached()){
         console.log("We have reached the end of the maze.");
