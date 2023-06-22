@@ -214,7 +214,7 @@ function unexploredNode(){
 
 app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Welcome to Group 6\'s server!');
+    res.end('Welcome to OffBalance\'s server!');
 });
 
 app.get('/client', function(req, res){
@@ -245,7 +245,7 @@ app.get('/client/datadump', function(req, res){
     // WORKS
 }); 
 
-app.get('/client/calibrate', function(req, res){
+app.post('/client/calibrate', function(req, res){
     start = mazeEnds[req.body.start];
     end = mazeEnds[req.body.end];
     beacon1 = mazeEnds[req.body.B1];
