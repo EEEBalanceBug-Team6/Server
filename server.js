@@ -12,7 +12,7 @@ let PORT = 80;
 
 const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
 const app = express();
-const londonTime = (new Date()).toLocaleTimeString("en-GB", { timeZone: "Europe/London" }); // try this without the timezone
+var londonTime = (new Date()).toLocaleTimeString("en-GB", { timeZone: "Europe/London" }); // try this without the timezone
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -220,7 +220,7 @@ app.get('/', function(req, res){
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${londonTime.getHours() + ':' + londonTime.getMinutes() + ':' + londonTime.getSeconds()}`
+        'message' : `GET @ ${londonTime}`
     };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -255,7 +255,7 @@ app.post('/client/calibrate', function(req, res){
 
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${londonTime.getHours() + ':' + londonTime.getMinutes() + ':' + londonTime.getSeconds()}`
+        'message' : `GET @ ${londonTime}`
     };
 
     res.writeHead(200, {'Content-Type': 'application/json'});
