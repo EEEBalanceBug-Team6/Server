@@ -1,16 +1,12 @@
 const Graph = require('./util/graph.js');
 const mt = require('./util/triangulation.js');
-const db = require('./util/db.js');
-const Queries = require('./util/queries.js');
 const cors = require('cors');
-const mysql = require('mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
 
 let IP = '0.0.0.0';
 let PORT = 80;
 
-const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
 const app = express();
 const londonTime = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" }); // try this without the timezone
 
@@ -25,7 +21,6 @@ var prevy = 0;
 var parentDirection;
 var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
-var lights = false;
 var start = [0, 0];
 var end = [20, 0]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
@@ -186,7 +181,7 @@ function unexploredNode(){
 
 app.get('/', function(req, res){
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Welcome to Group 6\'s server!');
+    res.end('Welcome to OffBalance\'s server!');
 });
 
 app.get('/client', function(req, res){
@@ -205,7 +200,7 @@ app.get('/client/datadump', function(req, res){
     res.writeHead(200, {'Content-Type': 'application/json'});
     var data = {
         "status" : "success",
-        "data" : alldata
+        "data" : newdata
     };
     res.end(JSON.stringify(data));
     newdata = {
@@ -279,7 +274,10 @@ app.get('/data/update', function(req, res) {
     var date = new Date();
     var isodate = date.toISOString();
 
-    addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
+    var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
+    addLocation(isodate, pos.x, pos.y, parseInt(body.direction));
+
+    // addLocation(isodate, parseInt(body.x), parseInt(body.y), parseInt(body.direction));
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('');
@@ -288,9 +286,9 @@ app.get('/data/update', function(req, res) {
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
 
-    //console.log('bpos1 :' + bpos1 + ', bpos2 :' + bpos2 + ', bber1 :' + body.bber1 + ', bber2 :' + body.bber2);
+    // console.log('bpos1 :' + bpos1 + ', bpos2 :' + bpos2 + ', bber1 :' + body.bber1 + ', bber2 :' + body.bber2);
     var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
-    //var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
+    // var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
     var coordinates = lookUpCoordinates(pos.x, pos.y);
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
     // var x = parseInt(body.x);  
@@ -337,11 +335,6 @@ app.get('/data/node', function(req, res){
 
     var options = lookUpOption(previousNode, childDirection);
     var response = graph.nextoption(unexploredNode(), previousNode).toString();
-
-    // console.log("Unexplored: " + unexploredNode());
-    // console.log("Previous node: " + previousNode);
-
-    //console.log(graph.nextoption(unexploredNode(), previousNode));
 
     if(endReached()){
         response = "-1";
@@ -408,25 +401,6 @@ app.get('/data/clear', function(req, res){
 
     res.writeHead(200, {'Content-Type' : 'text/plain'});
     res.end('success');
-});
-
-app.get('/lights/ping', function(req, res) {
-    if(lights){
-        res.send('1');
-    } else {
-        res.send('0'); // used by the ESP32s to check the status of the rover at this point.
-    }
-    lights = false;
-});
-
-app.get('/lights/node', function(req, res) {
-    var body = req.query;
-    if(body.incomplete === '1'){
-        lights = true;
-    } else {
-        lights = false;
-    }
-    res.send(''); // rover detects a node and wants to find it's coordinates
 });
 
 app.listen(PORT, IP, function(err){
