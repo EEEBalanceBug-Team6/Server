@@ -17,9 +17,6 @@ var londonTime = (new Date()).toLocaleTimeString("en-GB", { timeZone: "Europe/Lo
 app.use(bodyParser.json());
 app.use(cors());
 
-var pussycount = 0;
-var pussydirection;
-
 var graph = new Graph(); // this is the graph imported from the graph file
 var previousNode = 0; // this variable needs to be used to configure edges between two nodes. It is effectively the parent node
 var maxUpTillNow = 0; // niche case, try to run the entire rover path test and you'll see why this is needed
@@ -30,7 +27,7 @@ var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
 var lights = false;
 var start = [0, 0];
-var end = [4, 2]; // for testing purposes - change this when you change the test cases
+var end = [30, 0]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
 var beacon2 = [0, 0];
 var bpos1 = new mt.Vector(beacon1[0], beacon1[1]);
@@ -82,6 +79,10 @@ function addVertice(id, x, y, options){
     alldata.vertices.push(json);
     newdata.vertices.push(json);
     graph.addVertex(id);
+}
+
+function timeout(){
+    return new Date.now() - now;
 }
 
 function prettyPrint(node){
@@ -240,7 +241,8 @@ app.get('/client/datadump', function(req, res){
         "locations" : [], 
         "vertices" : [], 
         "edges" : [],
-        "shortest" : []
+        "shortest" : [],
+        "shortestToEnd" : []
     };
     // WORKS
 }); 
@@ -367,9 +369,6 @@ app.get('/data/node', function(req, res){
             previousNode = ID;
             newdata.vertices.push(verticeReturn(ID));
         } else {
-            if(pussycount === 0){
-                pussycount = 2;
-            }
             alldata.vertices.forEach(vertice => {
                 if(vertice.id === ID){
                     var optionList = Object.keys(vertice.options);
@@ -401,15 +400,6 @@ app.get('/data/node', function(req, res){
                 break;
             }
         }
-    }
-
-    if(pussycount === 2){
-        pussydirection = childDirection;
-    }
-
-    if(pussycount > 0){
-        response = pussydirection;
-        pussycount = pussycount - 1;
     }
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
