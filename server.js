@@ -8,7 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 let IP = '0.0.0.0';
-let PORT = 8080;
+let PORT = 80;
 
 const connectDB = mysql.createConnection(db); // remember to change these values to the correct ones when sending queries back and forth
 const app = express();
@@ -30,6 +30,8 @@ var start = [0, 0];
 var end = [20, 0]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
 var beacon2 = [0, 0];
+var bpos1 = new mt.Vector(beacon1[0], beacon1[1]);
+var bpos2 = new mt.Vector(beacon2[0], beacon2[1]);
 
 var alldata = { // data structure that stores everything, vertices and edges can be used together to create the graph
     "locations" : [], 
@@ -190,7 +192,7 @@ app.get('/', function(req, res){
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
+        'message' : `GET @ ${londonTime}`
     };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -210,7 +212,8 @@ app.get('/client/datadump', function(req, res){
         "locations" : [], 
         "vertices" : [], 
         "edges" : [],
-        "shortest" : []
+        "shortest" : [],
+        "shortestToEnd" : []
     };
     // WORKS
 }); 
@@ -223,7 +226,7 @@ app.get('/client/calibrate', function(req, res){
 
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date.getSeconds()}`
+        'message' : `GET @ ${londonTime}`
     };
 
     res.writeHead(200, {'Content-Type': 'application/json'});
@@ -285,10 +288,15 @@ app.get('/data/update', function(req, res) {
 app.get('/data/node', function(req, res){ 
     var body = req.query; 
 
-    var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
+    //console.log('bpos1 :' + bpos1 + ', bpos2 :' + bpos2 + ', bber1 :' + body.bber1 + ', bber2 :' + body.bber2);
+    var pos = mt.findMyPosition2B2B(bpos1, bpos2, parseFloat(body.bber1), parseFloat(body.bber2));
+    //var coordinates = lookUpCoordinates(parseInt(body.x), parseInt(body.y)); // change this based on triangulation
+    var coordinates = lookUpCoordinates(pos.x, pos.y);
     var ID = coordinates[0]; // IMPORTANT THAT YOU SEE YOUR IMPLEMENTATION OF LOOKUP COORDINATES HERE, IT IS A STRING.
-    var x = parseInt(body.x);  
-    var y = parseInt(body.y);
+    // var x = parseInt(body.x);  
+    // var y = parseInt(body.y);
+    var x = pos.x;
+    var y = pos.y;
     if(coordinates[1] !== -1){
         x = coordinates[1];
     }
@@ -384,14 +392,16 @@ app.get('/data/clear', function(req, res){
         "locations" : [], 
         "vertices" : [], 
         "edges" : [],
-        "shortest" : []
+        "shortest" : [],
+        "shortestToEnd" : []
     };
 
     newdata = {
         "locations" : [], 
         "vertices" : [], 
         "edges" : [],
-        "shortest" : []
+        "shortest" : [],
+        "shortestToEnd" : []
     };
 
     graph = new Graph();
