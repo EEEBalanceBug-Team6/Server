@@ -22,7 +22,7 @@ var parentDirection;
 var childDirection;
 var margin = 5; // based on the diameter of the rover: depends on live testing it
 var start = [0, 0];
-var end = [20, 0]; // for testing purposes - change this when you change the test cases
+var end = [20, -50]; // for testing purposes - change this when you change the test cases
 var beacon1 = [0, 0];
 var beacon2 = [0, 0];
 var bpos1 = new mt.Vector(beacon1[0], beacon1[1]);

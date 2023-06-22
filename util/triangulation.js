@@ -105,4 +105,7 @@ const findMyPosition2B2B = (bpos1, bpos2, bber1, bber2) => {
     return new Vector(xr, yr);
 }
 
-module.exports = { findMyPosition2B2B };
+module.exports = { 
+    findMyPosition2B2B,
+    Vector
+ };
