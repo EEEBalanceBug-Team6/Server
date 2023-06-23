@@ -20,11 +20,11 @@ var prevx = 0; // used to calculate the weight from the last node basically, rea
 var prevy = 0; 
 var parentDirection;
 var childDirection;
-var margin = 5; // based on the diameter of the rover: depends on live testing it
+var margin = 0.15; // based on the diameter of the rover: depends on live testing it
 var start = [0, 0];
-var end = [20, -50]; // for testing purposes - change this when you change the test cases
-var beacon1 = [0, 0];
-var beacon2 = [0, 0];
+var end = [0, 3.9]; // for testing purposes - change this when you change the test cases
+var beacon1 = [0, 4];
+var beacon2 = [1.5, 4];
 var bpos1 = new mt.Vector(beacon1[0], beacon1[1]);
 var bpos2 = new mt.Vector(beacon2[0], beacon2[1]);
 
@@ -187,7 +187,7 @@ app.get('/', function(req, res){
 app.get('/client', function(req, res){
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${londonTime}`
+        'message' : `GET @ ${new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });}`
     };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -221,7 +221,7 @@ app.get('/client/calibrate', function(req, res){
 
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${londonTime}`
+        'message' : `GET @ ${new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });}`
     };
 
     res.writeHead(200, {'Content-Type': 'application/json'});
@@ -262,9 +262,11 @@ app.get('/data/start', function(req, res){
     parentDirection = response;
     childDirection = ((parseInt(response)+180) % 360).toString();
 
+
     graph.Dijkstra();
-    prettyPrint(previousNode);
-    shortestList(previousNode);
+    console.log(alldata.vertices);
+    //prettyPrint(previousNode);
+    //shortestList(previousNode);
 
     // WORKS, only issue is it doesn't check if the node has already been initialized
 });
@@ -357,8 +359,9 @@ app.get('/data/node', function(req, res){
     childDirection = ((parseInt(response)+180) % 360).toString();
 
     graph.Dijkstra();
-    prettyPrint(previousNode);
-    shortestList(previousNode); 
+    console.log(alldata.vertices);
+    //prettyPrint(previousNode);
+    //shortestList(previousNode); 
 
     if(endReached()){
         console.log("We have reached the end of the maze.");
