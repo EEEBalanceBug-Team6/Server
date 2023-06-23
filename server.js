@@ -141,6 +141,44 @@ function lookUpCoordinates(x, y){
     return returnval;
 }
 
+function max_x(){
+    let max = 0;
+    let returnval = -1;
+    alldata.vertices.forEach(vertice => {
+        if(vertice.x > max){ 
+            max = vertice.x; 
+            returnval = vertice.id;
+        }
+    });
+    return returnval;
+}
+
+function max_y(){
+    let max = 0;
+    let returnval = -1;
+    alldata.vertices.forEach(vertice => {
+        if(vertice.y > max){ 
+            max = vertice.y; 
+            returnval = vertice.id;
+        }
+    });
+    return returnval;
+}
+
+function max_both(){
+    let max_x = 0;
+    let max_y = 0;
+    let returnval = -1;
+    alldata.vertices.forEach(vertice => {
+        if(vertice.y > max_y && vertice.x > max_x){ 
+            max_x = vertice.x; 
+            max_y = vertice.y; 
+            returnval = vertice.id;
+        }
+    });
+    return returnval;
+}
+
 function shortestList(ID){
     let stringList = graph.reconstruct(ID.toString(), '0');
     let intList = stringList.map(Number);
@@ -368,6 +406,18 @@ app.get('/data/node', function(req, res){
     if(endReached()){
         console.log("We have reached the end of the maze.");
         var endID = lookUpCoordinates(end[0], end[1])[0].toString();
+        if(endID === -1){
+            console.log('The end was not included in the calibration');
+            if(max_both() !== -1){
+                endID = max_both().toString();
+            } else if (max_y() !== -1){
+                endID = max_both().toString();
+            } else if (max_x() !== -1){
+                endID = max_both().toString();
+            } else {
+                endID = '0';
+            }
+        }
         console.log('The shortest path through the maze is: ' + graph.reconstruct(endID, '0'));
         alldata.shortestToEnd = graph.reconstruct(endID, '0').map(Number);
         newdata.shortestToEnd = graph.reconstruct(endID, '0').map(Number);
