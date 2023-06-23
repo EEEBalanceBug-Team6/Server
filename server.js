@@ -22,9 +22,9 @@ var parentDirection;
 var childDirection;
 var margin = 0.15; // based on the diameter of the rover: depends on live testing it
 var start = [0, 0];
-var end = [0, 3.9]; // for testing purposes - change this when you change the test cases
-var beacon1 = [0, 4];
-var beacon2 = [1.5, 4];
+var end = [1.1, 0]; // for testing purposes - change this when you change the test cases
+var beacon1 = [0, 1.7];
+var beacon2 = [1.1, 1.7];
 var bpos1 = new mt.Vector(beacon1[0], beacon1[1]);
 var bpos2 = new mt.Vector(beacon2[0], beacon2[1]);
 
@@ -252,7 +252,7 @@ app.get('/client/datadump', function(req, res){
     // WORKS
 }); 
 
-app.get('/client/calibrate', function(req, res){
+app.post('/client/calibrate', function(req, res){
     start = mazeEnds[req.body.start];
     end = mazeEnds[req.body.end];
     beacon1 = mazeEnds[req.body.B1];
@@ -270,6 +270,7 @@ app.get('/client/calibrate', function(req, res){
 
 app.get('/data/start', function(req, res){
     //the rover will pan around and see the possible directions it can move from the start node (options), the json here will NOT take body.
+    console.log(req.query);
     var body = req.query; // changed from req.body to req.query
     var options = {}; // initializer json for options
     var x = start[0]; 
@@ -326,6 +327,7 @@ app.get('/data/update', function(req, res) {
 });
 
 app.get('/data/node', function(req, res){ 
+    console.log(req.query);
     var body = req.query; 
 
     // console.log('bpos1 :' + bpos1 + ', bpos2 :' + bpos2 + ', bber1 :' + body.bber1 + ', bber2 :' + body.bber2);
