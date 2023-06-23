@@ -185,9 +185,10 @@ app.get('/', function(req, res){
 });
 
 app.get('/client', function(req, res){
+    let time = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" })
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });}`
+        'message' : 'GET @ ' + time.toString()
     };
     stringResponse = JSON.stringify(response)
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -218,10 +219,11 @@ app.get('/client/calibrate', function(req, res){
     end = mazeEnds[req.body.end];
     beacon1 = mazeEnds[req.body.B1];
     beacon2 = mazeEnds[req.body.B2];
+    let time = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" })
 
     var response = {
         'status' : 'success',
-        'message' : `GET @ ${new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/London" });}`
+        'message' : 'GET @ ' + time.toString()
     };
 
     res.writeHead(200, {'Content-Type': 'application/json'});
