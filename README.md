@@ -1,5 +1,9 @@
 # Node Server
 
+## Description
+
+This is the code for the server backend for group 6's implementation of the automated maze-solving robot. It converts dead-ends, junctions and turns into nodes on a Directed Acyclic Graph (which represents the maze) and uses the distance between these as weights to traverse an edge. Using Dijkstra's Algorithm and a clever data structure for the graph, it is able to deduce the shortest path through the maze. The Server has various endpoints to implement the same.
+
 ## Important links
 
 - **GitHub:** https://github.com/hakanmerdan/EEEBalanceBug.git
@@ -39,12 +43,6 @@
 - [x]  Check if the last bullet point about response of update function has been implemented.
 - [x]  Check that newdata is updated even when you encounter a node that you have been to before. 
 - [x]  Add margin for error for node (width of the rover).
-- [ ]  Finish endpoints for the lights (lights and ping).
-- [ ]  Test lights endpoints
-- [ ]  Test calibration endpoint.
-- [ ]  Test margin for error with static value.
-- [ ]  Use Sam's triangulation method.
-- [ ]  Send output of data structure to database.
 
 ## Notes on Tasks
 
